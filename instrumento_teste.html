@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Experimento de Visualização</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <!-- Skip Link para acessibilidade (WCAG) -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+  <main id="main-content">
+
+  <!-- ===================== TELA INICIAL ===================== -->
+  <section id="tela-inicial" class="tela ativo" aria-label="Tela inicial do experimento">
+    <div class="conteudo">
+      <img src="assets/logos/UERJ-ESDI.jpg" alt="Logo da Instituição" class="logo" />
+      <h1>Bem-vindo(a)!</h1>
+      <p>Este experimento avaliará seu letramento estatístico e sua percepção sobre diferentes gráficos.</p>
+      <p>Em nenhum momento você será julgado(a) como pessoa, e esta avaliação tem a finalidade única de avaliação dos gráficos.</p>
+      <p>Caso sinta algum desconforto, sinta-se livre para a qualquer momento interromper a realização do experimento, sem qualquer perda.</p>
+      <button id="btn-iniciar">Iniciar</button>
+    </div>
+  </section>
+
+  <!-- ===================== TESTE DE LETRAMENTO ===================== -->
+  <section id="tela-letramento" class="tela" aria-label="Teste de letramento estatístico">
+    <div class="conteudo">
+      <h2>Responda às perguntas abaixo</h2>
+      <form id="form-letramento">
+        <!-- Q1 -->
+        <div class="pergunta">
+          <p>1) Um pequeno objeto foi pesado por nove estudantes em uma balança.<br>Os valores (g) foram:<br>
+            6,2 – 6,0 – 6,0 – 15,3 – 6,1 – 6,3 – 6,2 – 6,15 – 6,2</p>
+          <p>Os estudantes querem determinar o valor mais próximo possível do peso real do objeto.
+            <br>Qual das opções abaixo você recomendaria?</p>
+          <label><input type="radio" name="q1" value="a" required />Usar o número mais comum, que é 6,2.</label>
+          <label><input type="radio" name="q1" value="b" />Usar o 6,15, pois parece ser o mais preciso.</label>
+          <label><input type="radio" name="q1" value="c" />Somar os nove valores e dividir por 9.</label>
+          <label><input type="radio" name="q1" value="d" />Eliminar o 15,3, somar os outros e dividir por 8.</label>
+        </div>
+
+        <!-- Q2 -->
+        <div class="pergunta">
+          <p>2) Está escrito no rótulo de um medicamento:<br>
+             <i>“ADVERTÊNCIA: Para uso na pele, há 15% de chance de desenvolver irritação. Se isso ocorrer, procure orientação médica.”</i></p>
+ <p>Qual é a melhor interpretação desse aviso?</p>
+          <label><input type="radio" name="q2" value="a" required />Não use esse medicamento — a chance de irritação é alta.</label>
+          <label><input type="radio" name="q2" value="b" />Use só 15% da dose recomendada.</label>
+          <label><input type="radio" name="q2" value="c" />Se ocorrer irritação, afetará apenas 15% da pele.</label>
+          <label><input type="radio" name="q2" value="d" />Aproximadamente 15 em cada 100 pessoas terão irritação.</label>
+          <label><input type="radio" name="q2" value="e" />A chance de irritação é muito pequena, não se preocupe.</label>
+        </div>
+
+        <!-- Q3 -->
+        <div class="pergunta">
+          <p>3) Um centro meteorológico queria avaliar a precisão de suas previsões de 70% de chance de chuva.
+             <br>A previsão de 70% pode ser considerada precisa se choveu em:</p>
+          <label><input type="radio" name="q3" value="a" required />95% a 100% desses dias.</label>
+          <label><input type="radio" name="q3" value="b" />85% a 94% desses dias.</label>
+          <label><input type="radio" name="q3" value="c" />75% a 84% desses dias.</label>
+          <label><input type="radio" name="q3" value="d" />65% a 74% desses dias.</label>
+          <label><input type="radio" name="q3" value="e" />55% a 64% desses dias.</label>
+        </div>
+
+        <!-- Q4 -->
+        <div class="pergunta">
+          <p>4) Um novo medicamento para eczema foi testado com 30 pessoas, divididas aleatoriamente:<br>
+             <ul>
+                <li>Grupo medicado (20 pessoas): 8 melhoraram, 12 não.</li>
+                <li>Grupo controle (10 pessoas): 2 melhoraram, 8 não.</li>
+             </ul>
+             <br>
+             Qual a melhor conclusão?</p>
+          <label><input type="radio" name="q4" value="a" required />O medicamento foi um pouco eficaz (40% melhoraram vs 20% no controle).</label>
+          <label><input type="radio" name="q4" value="b" />O medicamento não foi eficaz, pois mais pessoas não melhoraram.</label>
+          <label><input type="radio" name="q4" value="c" />O número de melhoras pode ser mero acaso.</label>
+          <label><input type="radio" name="q4" value="d" />Não se pode concluir nada com tamanhos diferentes.</label>
+        </div>
+
+        <!-- Q5 (checkbox) -->
+        <div class="pergunta">
+          <p>5) Uma empresa pesquisou quanto os adolescentes gastam por ano com música em 80 shoppings.
+             Participaram 2.050 adolescentes, e a empresa concluiu que o gasto médio anual era R$ 155.<br>
+             Marque todas as alternativas com as quais você concorda:</p>
+          <label><input type="checkbox" name="q5" value="A" />A média pode estar incorreta, pois os adolescentes apenas estimaram gastos.</label>
+          <label><input type="checkbox" name="q5" value="B" />O número de shoppings foi pequeno para representar todo o país.</label>
+          <label><input type="checkbox" name="q5" value="C" />A média pode estar distorcida porque só adolescentes em shoppings participaram.</label>
+          <label><input type="checkbox" name="q5" value="D" />O ideal seria entrevistar adolescentes que saíssem de lojas de música.</label>
+          <label><input type="checkbox" name="q5" value="E" />A amostra foi suficientemente grande, então a média é confiável.</label>
+        </div>
+
+        <input type="submit" value="Enviar Respostas" />
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== TELA TRANSIÇÃO ===================== -->
+  <section id="tela-transicao" class="tela" aria-label="Tela de transição">
+    <div class="conteudo">
+      <h2>Instruções</h2>
+      <p>Agora, você visualizará três gráficos e responderá perguntas de compreensão, memória e engajamento (Likert em sliders). Haverá ainda tarefas de distração que exigem respostas mínimas.</p>
+      <button id="btn-avancar-transicao">Avançar</button>
+    </div>
+  </section>
+
+  <!-- ===================== GRÁFICO 1 (BARRAS) ===================== -->
+  <section id="tela-grafico1" class="tela" aria-label="Gráfico de Barras sobre coleta de lixo">
+    <div class="conteudo">
+      <img id="grafico1-img" src="../Análise Estatística/grafico.svg" alt="Gráfico de Barras" class="grafico" />
+      <div class="pergunta">
+        <p>Pergunta de Compreensão:</p>
+        <label><input type="radio" name="g1_compreensao" value="a" required />Opção A</label>
+        <label><input type="radio" name="g1_compreensao" value="b" />Opção B</label>
+        <label><input type="radio" name="g1_compreensao" value="c" />Opção C</label>
+        <label><input type="radio" name="g1_compreensao" value="d" />Opção D</label>
+      </div>
+      <button id="btn-g1-compreensao-ok">Confirmar Compreensão</button>
+    </div>
+  </section>
+
+  <!-- Distração G1 -->
+  <section id="tela-grafico1-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 1">
+    <div class="conteudo">
+      <h2>Tarefa de Distração (Gráfico 1)</h2>
+      <p>Digite o alfabeto ao contrário (mínimo 3 caracteres):</p>
+      <input type="text" id="g1-distracao-input" placeholder="Ex.: z y x w..." aria-label="Campo para digitar o alfabeto ao contrário" />
+      <p id="g1-distracao-erro" class="invalido" style="display:none;">É necessário digitar ao menos 3 caracteres.</p>
+      <button id="btn-g1-distracao-fim">Prosseguir</button>
+    </div>
+  </section>
+
+  <!-- Memória G1 -->
+  <section id="tela-grafico1-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 1">
+    <div class="conteudo">
+      <h2>Pergunta de Memória — Gráfico 1</h2>
+      <p>(Pergunta sobre algo exibido no gráfico anteriormente.)</p>
+      <div class="pergunta">
+        <label><input type="radio" name="g1_memoria" value="a" required />Opção A</label>
+        <label><input type="radio" name="g1_memoria" value="b" />Opção B</label>
+        <label><input type="radio" name="g1_memoria" value="c" />Opção C</label>
+        <label><input type="radio" name="g1_memoria" value="d" />Opção D</label>
+      </div>
+      <button id="btn-g1-memoria-ok">Confirmar Memória</button>
+    </div>
+  </section>
+
+  <!-- Engajamento G1 (slider) -->
+  <section id="tela-grafico1-engajamento" class="tela" aria-label="Escala de Engajamento do Gráfico 1">
+    <div class="conteudo">
+      <h2>Escala de Engajamento — Gráfico 1</h2>
+      <p>Arraste o slider (1=discordo totalmente / 5=concordo totalmente). Valor inicial é (não selecionado).</p>
+      
+      <div class="slider-likert">
+        <label for="g1_e1">1) Achei este gráfico interessante:</label>
+        <input type="range" id="g1_e1" name="g1_e1" min="0" max="5" step="1" value="0" 
+               aria-valuemin="1" aria-valuemax="5" aria-valuenow="0" aria-label="Slider de engajamento 1, gráfico 1" />
+        <span class="valor-selecionado" id="g1_e1_value">(não selecionado)</span>
+      </div>
+
+      <div class="slider-likert">
+        <label for="g1_e2">2) Gostaria de ver mais dados deste tipo:</label>
+        <input type="range" id="g1_e2" name="g1_e2" min="0" max="5" step="1" value="0"
+               aria-valuemin="1" aria-valuemax="5" aria-valuenow="0" aria-label="Slider de engajamento 2, gráfico 1" />
+        <span class="valor-selecionado" id="g1_e2_value">(não selecionado)</span>
+      </div>
+
+      <div class="slider-likert">
+        <label for="g1_e3">3) Senti curiosidade em explorar esses números:</label>
+        <input type="range" id="g1_e3" name="g1_e3" min="0" max="5" step="1" value="0"
+               aria-valuemin="1" aria-valuemax="5" aria-valuenow="0" aria-label="Slider de engajamento 3, gráfico 1" />
+        <span class="valor-selecionado" id="g1_e3_value">(não selecionado)</span>
+      </div>
+
+      <p id="g1-engajamento-erro" class="invalido" style="display:none;">Selecione valores entre 1 e 5 para prosseguir.</p>
+
+      <button id="btn-g1-engajamento-ok">Próximo Gráfico</button>
+    </div>
+  </section>
+
+  <!-- ===================== GRÁFICO 2 (LINHA) ===================== -->
+  <section id="tela-grafico2" class="tela" aria-label="Gráfico de Linha sobre população urbana vs rural">
+    <div class="conteudo">
+      <img id="grafico2-img" src="" alt="Gráfico de Linha" class="grafico" />
+      <div class="pergunta">
+        <p>Pergunta de Compreensão:</p>
+        <label><input type="radio" name="g2_compreensao" value="a" required />Opção A</label>
+        <label><input type="radio" name="g2_compreensao" value="b" />Opção B</label>
+        <label><input type="radio" name="g2_compreensao" value="c" />Opção C</label>
+        <label><input type="radio" name="g2_compreensao" value="d" />Opção D</label>
+      </div>
+      <button id="btn-g2-compreensao-ok">Confirmar Compreensão</button>
+    </div>
+  </section>
+
+  <!-- Distração G2 -->
+  <section id="tela-grafico2-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 2">
+    <div class="conteudo">
+      <h2>Tarefa de Distração (Gráfico 2)</h2>
+      <p>Digite 3 animais que comecem com a letra “C” (ex.: cachorro, coelho...):</p>
+      <input type="text" id="g2-distracao-input" placeholder="Ex.: cachorro coelho cavalo" aria-label="Digite aqui 3 animais com c" />
+      <p id="g2-distracao-erro" class="invalido" style="display:none;">Você precisa informar ao menos 3 palavras.</p>
+      <button id="btn-g2-distracao-fim">Prosseguir</button>
+    </div>
+  </section>
+
+  <section id="tela-grafico2-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 2">
+    <div class="conteudo">
+      <h2>Pergunta de Memória — Gráfico 2</h2>
+      <div class="pergunta">
+        <label><input type="radio" name="g2_memoria" value="a" required />Opção A</label>
+        <label><input type="radio" name="g2_memoria" value="b" />Opção B</label>
+        <label><input type="radio" name="g2_memoria" value="c" />Opção C</label>
+        <label><input type="radio" name="g2_memoria" value="d" />Opção D</label>
+      </div>
+      <button id="btn-g2-memoria-ok">Confirmar Memória</button>
+    </div>
+  </section>
+
+  <!-- Engajamento G2 (slider) -->
+  <section id="tela-grafico2-engajamento" class="tela" aria-label="Escala de Engajamento do Gráfico 2">
+    <div class="conteudo">
+      <h2>Escala de Engajamento — Gráfico 2</h2>
+      <p>Arraste o slider (1=discordo totalmente / 5=concordo totalmente). Valor inicial é (não selecionado).</p>
+
+      <div class="slider-likert">
+        <label for="g2_e1">1) Achei este gráfico interessante:</label>
+        <input type="range" id="g2_e1" name="g2_e1" min="0" max="5" step="1" value="0"
+               aria-valuemin="1" aria-valuemax="5" aria-valuenow="0" aria-label="Slider de engajamento 1, gráfico 2" />
+        <span class="valor-selecionado" id="g2_e1_value">(não selecionado)</span>
+      </div>
+
+      <div class="slider-likert">
+        <label for="g2_e2">2) Gostaria de ver mais dados deste tipo:</label>
+        <input type="range" id="g2_e2" name="g2_e2" min="0" max="5" step="1" value="0"
+               aria-valuemin="1" aria-valuemax="5" aria-valuenow="0" aria-label="Slider de engajamento 2, gráfico 2" />
+        <span class="valor-selecionado" id="g2_e2_value">(não selecionado)</span>
+      </div>
+
+      <div class="slider-likert">
+        <label for="g2_e3">3) Senti curiosidade em explorar esses números:</label>
+        <input type="range" id="g2_e3" name="g2_e3" min="0" max="5" step="1" value="0"
+               aria-valuemin="1" aria-valuemax="5" aria-valuenow="0" aria-label="Slider de engajamento 3, gráfico 2" />
+        <span class="valor-selecionado" id="g2_e3_value">(não selecionado)</span>
+      </div>
+
+      <p id="g2-engajamento-erro" class="invalido" style="display:none;">Selecione valores entre 1 e 5 para prosseguir.</p>
+      <button id="btn-g2-engajamento-ok">Próximo Gráfico</button>
+    </div>
+  </section>
+
+  <!-- ===================== GRÁFICO 3 (WAFFLE) ===================== -->
+  <section id="tela-grafico3" class="tela" aria-label="Gráfico Waffle sobre meio de transporte">
+    <div class="conteudo">
+      <img id="grafico3-img" src="" alt="Gráfico Waffle" class="grafico" />
+      <div class="pergunta">
+        <p>Pergunta de Compreensão:</p>
+        <label><input type="radio" name="g3_compreensao" value="a" required />Opção A</label>
+        <label><input type="radio" name="g3_compreensao" value="b" />Opção B</label>
+        <label><input type="radio" name="g3_compreensao" value="c" />Opção C</label>
+        <label><input type="radio" name="g3_compreensao" value="d" />Opção D</label>
+      </div>
+      <button id="btn-g3-compreensao-ok">Confirmar Compreensão</button>
+    </div>
+  </section>
+
+  <!-- Distração G3 -->
+  <section id="tela-grafico3-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 3">
+    <div class="conteudo">
+      <h2>Tarefa de Distração (Gráfico 3)</h2>
+      <p>Digite 2 frutas que comecem com a letra “M” (ex.: maçã, melão):</p>
+      <input type="text" id="g3-distracao-input" placeholder="Ex.: maçã melão" aria-label="Digite 2 frutas com M" />
+      <p id="g3-distracao-erro" class="invalido" style="display:none;">Você precisa informar ao menos 2 palavras.</p>
+      <button id="btn-g3-distracao-fim">Prosseguir</button>
+    </div>
+  </section>
+
+  <section id="tela-grafico3-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 3">
+    <div class="conteudo">
+      <h2>Pergunta de Memória — Gráfico 3</h2>
+      <div class="pergunta">
+        <label><input type="radio" name="g3_memoria" value="a" required />Opção A</label>
+        <label><input type="radio" name="g3_memoria" value="b" />Opção B</label>
+        <label><input type="radio" name="g3_memoria" value="c" />Opção C</label>
+        <label><input type="radio" name="g3_memoria" value="d" />Opção D</label>
+      </div>
+      <button id="btn-g3-memoria-ok">Confirmar Memória</button>
+    </div>
+  </section>
+
+  <!-- Engajamento G3 (slider) -->
+  <section id="tela-grafico3-engajamento" class="tela" aria-label="Escala de Engajamento do Gráfico 3">
+    <div class="conteudo">
+      <h2>Escala de Engajamento — Gráfico 3</h2>
+      <p>Arraste o slider (1=discordo totalmente / 5=concordo totalmente). Valor inicial é (não selecionado).</p>
+
+      <div class="slider-likert">
+        <label for="g3_e1">1) Achei este gráfico interessante:</label>
+        <input type="range" id="g3_e1" name="g3_e1" min="0" max="5" step="1" value="0"
+               aria-valuemin="1" aria-valuemax="5" aria-valuenow="0" aria-label="Slider de engajamento 1, gráfico 3" />
+        <span class="valor-selecionado" id="g3_e1_value">(não selecionado)</span>
+      </div>
+
+      <div class="slider-likert">
+        <label for="g3_e2">2) Gostaria de ver mais dados deste tipo:</label>
+        <input type="range" id="g3_e2" name="g3_e2" min="0" max="5" step="1" value="0"
+               aria-valuemin="1" aria-valuemax="5" aria-valuenow="0" aria-label="Slider de engajamento 2, gráfico 3" />
+        <span class="valor-selecionado" id="g3_e2_value">(não selecionado)</span>
+      </div>
+
+      <div class="slider-likert">
+        <label for="g3_e3">3) Senti curiosidade em explorar esses números:</label>
+        <input type="range" id="g3_e3" name="g3_e3" min="0" max="5" step="1" value="0"
+               aria-valuemin="1" aria-valuemax="5" aria-valuenow="0" aria-label="Slider de engajamento 3, gráfico 3" />
+        <span class="valor-selecionado" id="g3_e3_value">(não selecionado)</span>
+      </div>
+
+      <p id="g3-engajamento-erro" class="invalido" style="display:none;">Selecione valores entre 1 e 5 para finalizar.</p>
+      <button id="btn-g3-engajamento-ok">Finalizar</button>
+    </div>
+  </section>
+
+  </main> <!-- fim do main-content -->
+
+
+</body>
+</html>

@@ -1,0 +1,384 @@
+// ================================
+// VARIÁVEIS GLOBAIS
+// ================================
+let nivelLetramento = null;    // "baixo", "médio" ou "alto"
+let grupoVisual = null;        // "controle" ou "experimental"
+let respostas = {
+  letramento: {},
+  grafico1: {},
+  grafico2: {},
+  grafico3: {}
+};
+let tempoInicio = Date.now();
+
+// URL do SheetDB (substitua pelo seu ID real)
+const SHEETDB_URL = 'https://sheetdb.io/api/v1/0hz7t51f4ukq9';
+
+// ================================
+// FUNÇÕES ÚTEIS
+// ================================
+function mostrarTela(idTela) {
+  document.querySelectorAll('.tela').forEach(t => t.classList.remove('ativo'));
+  document.getElementById(idTela).classList.add('ativo');
+}
+
+function calcularNivelLetramento() {
+  let pontos = 0;
+  if (respostas.letramento.q1 === "d") pontos++;
+  if (respostas.letramento.q2 === "d") pontos++;
+  if (respostas.letramento.q3 === "d") pontos++;
+  if (respostas.letramento.q4 === "a") pontos++;
+  if (pontos <= 2) return "baixo";
+  if (pontos === 3) return "médio";
+  return "alto";
+}
+
+function sortearGrupoVisual() {
+  return Math.random() < 0.5 ? "controle" : "experimental";
+}
+
+function salvarLocalStorage() {
+  localStorage.setItem("respostas_experimento", JSON.stringify(respostas));
+}
+
+function obterTempoTotal() {
+  let agora = Date.now();
+  return Math.round((agora - tempoInicio) / 1000);
+}
+
+function exportarLocalmente(dataExport) {
+  const blob = new Blob([JSON.stringify(dataExport, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "respostas_experimento.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function enviarDadosAoSheetDB(dataExport) {
+  const dadosSheetDB = {
+    data: [{
+      timestamp: new Date().toISOString(),
+      letramento_nivel: dataExport.letramento_nivel,
+      grupo_visual: dataExport.grupo_visual,
+      tempo_total_segundos: dataExport.tempo_total_segundos,
+      q1: dataExport.respostas.q1,
+      q2: dataExport.respostas.q2,
+      q3: dataExport.respostas.q3,
+      q4: dataExport.respostas.q4,
+      q5: (dataExport.respostas.q5 || []).join('; '),
+      g1_compreensao: dataExport.respostas.grafico1.compreensao || '',
+      g1_distracao: dataExport.respostas.grafico1.distracao || '',
+      g1_memoria: dataExport.respostas.grafico1.memoria || '',
+      g1_engajamento: (dataExport.respostas.grafico1.engajamento || []).join(', '),
+      g2_compreensao: dataExport.respostas.grafico2.compreensao || '',
+      g2_distracao: dataExport.respostas.grafico2.distracao || '',
+      g2_memoria: dataExport.respostas.grafico2.memoria || '',
+      g2_engajamento: (dataExport.respostas.grafico2.engajamento || []).join(', '),
+      g3_compreensao: dataExport.respostas.grafico3.compreensao || '',
+      g3_distracao: dataExport.respostas.grafico3.distracao || '',
+      g3_memoria: dataExport.respostas.grafico3.memoria || '',
+      g3_engajamento: (dataExport.respostas.grafico3.engajamento || []).join(', ')
+    }]
+  };
+
+  fetch(SHEETDB_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(dadosSheetDB)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Dados enviados para SheetDB com sucesso:', data);
+    alert("Dados enviados com sucesso para SheetDB.");
+  })
+  .catch(error => {
+    console.error('Erro ao enviar para SheetDB:', error);
+    alert("Erro ao enviar dados para SheetDB. Verifique a conexão ou URL.");
+  });
+}
+
+function finalizarExperimento() {
+  const dataExport = {
+    timestamp: new Date().toISOString(),
+    letramento_nivel: nivelLetramento,
+    grupo_visual: grupoVisual,
+    respostas: {
+      q1: respostas.letramento.q1,
+      q2: respostas.letramento.q2,
+      q3: respostas.letramento.q3,
+      q4: respostas.letramento.q4,
+      q5: respostas.letramento.q5 || [],
+      grafico1: respostas.grafico1,
+      grafico2: respostas.grafico2,
+      grafico3: respostas.grafico3
+    },
+    tempo_total_segundos: obterTempoTotal()
+  };
+
+  exportarLocalmente(dataExport);
+  enviarDadosAoSheetDB(dataExport);
+}
+
+// ================================
+// FUNÇÕES PARA SLIDERS (1-5, sem valor inicial)
+// ================================
+function atualizarValorSlider(sliderId, labelId) {
+  const slider = document.getElementById(sliderId);
+  const label = document.getElementById(labelId);
+  
+  slider.addEventListener('input', () => {
+    let valor = parseInt(slider.value);
+    
+    // Força o valor para estar entre 1 e 5
+    if (valor < 1) valor = 1;
+    if (valor > 5) valor = 5;
+    
+    // Atualiza a exibição
+    label.textContent = valor.toString();
+    slider.setAttribute("aria-valuenow", valor);
+    slider.value = valor; // Atualiza o valor do slider
+  });
+  
+  // Inicializa como "não selecionado"
+  label.textContent = "(não selecionado)";
+  slider.setAttribute("aria-valuenow", 0);
+}
+
+function validarSliders(sliderIds, erroId) {
+  let valido = true;
+  sliderIds.forEach(id => {
+    const val = parseInt(document.getElementById(id).value);
+    if (val < 1 || val > 5) {
+      valido = false;
+    }
+  });
+  document.getElementById(erroId).style.display = valido ? "none" : "block";
+  return valido;
+}
+
+// ================================
+// EVENTOS AO CARREGAR A PÁGINA
+// ================================
+window.addEventListener('DOMContentLoaded', () => {
+  // Sliders: atualiza exibição
+  atualizarValorSlider("g1_e1", "g1_e1_value");
+  atualizarValorSlider("g1_e2", "g1_e2_value");
+  atualizarValorSlider("g1_e3", "g1_e3_value");
+
+  atualizarValorSlider("g2_e1", "g2_e1_value");
+  atualizarValorSlider("g2_e2", "g2_e2_value");
+  atualizarValorSlider("g2_e3", "g2_e3_value");
+
+  atualizarValorSlider("g3_e1", "g3_e1_value");
+  atualizarValorSlider("g3_e2", "g3_e2_value");
+  atualizarValorSlider("g3_e3", "g3_e3_value");
+
+  // TELA INICIAL
+  document.getElementById('btn-iniciar').addEventListener('click', () => {
+    mostrarTela('tela-letramento');
+  });
+
+  // TESTE DE LETRAMENTO
+  document.getElementById('form-letramento').addEventListener('submit', e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    respostas.letramento.q1 = formData.get('q1');
+    respostas.letramento.q2 = formData.get('q2');
+    respostas.letramento.q3 = formData.get('q3');
+    respostas.letramento.q4 = formData.get('q4');
+    respostas.letramento.q5 = formData.getAll('q5');
+
+    nivelLetramento = calcularNivelLetramento();
+    grupoVisual = sortearGrupoVisual();
+    salvarLocalStorage();
+
+    mostrarTela('tela-transicao');
+  });
+
+  // TELA TRANSIÇÃO
+  document.getElementById('btn-avancar-transicao').addEventListener('click', () => {
+    mostrarTela('tela-grafico1');
+    const g1Img = document.getElementById('grafico1-img');
+    if (grupoVisual === "controle") {
+      g1Img.src = "assets/graficos/grafico1_barras_controle.svg"; 
+    } else {
+      g1Img.src = "assets/graficos/grafico1_barras_experimental.svg";
+    }
+  });
+
+  // GRÁFICO 1
+  document.getElementById('btn-g1-compreensao-ok').addEventListener('click', () => {
+    const sel = document.querySelector('input[name="g1_compreensao"]:checked');
+    if (!sel) {
+      alert("Selecione uma resposta de compreensão.");
+      return;
+    }
+    respostas.grafico1.compreensao = sel.value;
+    salvarLocalStorage();
+    mostrarTela('tela-grafico1-distracao');
+  });
+
+  document.getElementById('btn-g1-distracao-fim').addEventListener('click', () => {
+    const distraInput = document.getElementById('g1-distracao-input');
+    const erro = document.getElementById('g1-distracao-erro');
+    if (!distraInput.value || distraInput.value.trim().length < 3) {
+      erro.style.display = "block";
+      return;
+    }
+    erro.style.display = "none";
+
+    respostas.grafico1.distracao = distraInput.value.trim();
+    salvarLocalStorage();
+    mostrarTela('tela-grafico1-memoria');
+  });
+
+  document.getElementById('btn-g1-memoria-ok').addEventListener('click', () => {
+    const sel = document.querySelector('input[name="g1_memoria"]:checked');
+    if (!sel) {
+      alert("Selecione uma resposta de memória.");
+      return;
+    }
+    respostas.grafico1.memoria = sel.value;
+    salvarLocalStorage();
+    mostrarTela('tela-grafico1-engajamento');
+  });
+
+  document.getElementById('btn-g1-engajamento-ok').addEventListener('click', () => {
+    if (!validarSliders(["g1_e1","g1_e2","g1_e3"], "g1-engajamento-erro")) {
+      return;
+    }
+    const e1 = parseInt(document.getElementById('g1_e1').value);
+    const e2 = parseInt(document.getElementById('g1_e2').value);
+    const e3 = parseInt(document.getElementById('g1_e3').value);
+    respostas.grafico1.engajamento = [e1, e2, e3];
+    salvarLocalStorage();
+
+    mostrarTela('tela-grafico2');
+    const g2Img = document.getElementById('grafico2-img');
+    if (grupoVisual === "controle") {
+      g2Img.src = "assets/graficos/grafico2_linha_controle.svg";
+    } else {
+      g2Img.src = "assets/graficos/grafico2_linha_experimental.svg";
+    }
+  });
+
+  // GRÁFICO 2
+  document.getElementById('btn-g2-compreensao-ok').addEventListener('click', () => {
+    const sel = document.querySelector('input[name="g2_compreensao"]:checked');
+    if (!sel) {
+      alert("Selecione uma resposta de compreensão.");
+      return;
+    }
+    respostas.grafico2.compreensao = sel.value;
+    salvarLocalStorage();
+    mostrarTela('tela-grafico2-distracao');
+  });
+
+  document.getElementById('btn-g2-distracao-fim').addEventListener('click', () => {
+    const inputVal = document.getElementById('g2-distracao-input').value.trim();
+    const erroElem = document.getElementById('g2-distracao-erro');
+    if (!inputVal) {
+      erroElem.style.display = "block";
+      return;
+    }
+    let palavras = inputVal.split(/\s+/).filter(Boolean); 
+    if (palavras.length < 3) {
+      erroElem.style.display = "block";
+      return;
+    }
+    erroElem.style.display = "none";
+
+    respostas.grafico2.distracao = inputVal;
+    salvarLocalStorage();
+    mostrarTela('tela-grafico2-memoria');
+  });
+
+  document.getElementById('btn-g2-memoria-ok').addEventListener('click', () => {
+    const sel = document.querySelector('input[name="g2_memoria"]:checked');
+    if (!sel) {
+      alert("Selecione uma resposta de memória.");
+      return;
+    }
+    respostas.grafico2.memoria = sel.value;
+    salvarLocalStorage();
+    mostrarTela('tela-grafico2-engajamento');
+  });
+
+  document.getElementById('btn-g2-engajamento-ok').addEventListener('click', () => {
+    if (!validarSliders(["g2_e1","g2_e2","g2_e3"], "g2-engajamento-erro")) {
+      return;
+    }
+    const e1 = parseInt(document.getElementById('g2_e1').value);
+    const e2 = parseInt(document.getElementById('g2_e2').value);
+    const e3 = parseInt(document.getElementById('g2_e3').value);
+    respostas.grafico2.engajamento = [e1, e2, e3];
+    salvarLocalStorage();
+
+    mostrarTela('tela-grafico3');
+    const g3Img = document.getElementById('grafico3-img');
+    if (grupoVisual === "controle") {
+      g3Img.src = "assets/graficos/grafico3_waffle_controle.png";
+    } else {
+      g3Img.src = "assets/graficos/grafico3_waffle_experimental.png";
+    }
+  });
+
+  // GRÁFICO 3
+  document.getElementById('btn-g3-compreensao-ok').addEventListener('click', () => {
+    const sel = document.querySelector('input[name="g3_compreensao"]:checked');
+    if (!sel) {
+      alert("Selecione uma resposta de compreensão.");
+      return;
+    }
+    respostas.grafico3.compreensao = sel.value;
+    salvarLocalStorage();
+    mostrarTela('tela-grafico3-distracao');
+  });
+
+  document.getElementById('btn-g3-distracao-fim').addEventListener('click', () => {
+    const inputVal = document.getElementById('g3-distracao-input').value.trim();
+    const erroElem = document.getElementById('g3-distracao-erro');
+    if (!inputVal) {
+      erroElem.style.display = "block";
+      return;
+    }
+    let palavras = inputVal.split(/\s+/).filter(Boolean); 
+    if (palavras.length < 2) {
+      erroElem.style.display = "block";
+      return;
+    }
+    erroElem.style.display = "none";
+
+    respostas.grafico3.distracao = inputVal;
+    salvarLocalStorage();
+    mostrarTela('tela-grafico3-memoria');
+  });
+
+  document.getElementById('btn-g3-memoria-ok').addEventListener('click', () => {
+    const sel = document.querySelector('input[name="g3_memoria"]:checked');
+    if (!sel) {
+      alert("Selecione uma resposta de memória.");
+      return;
+    }
+    respostas.grafico3.memoria = sel.value;
+    salvarLocalStorage();
+    mostrarTela('tela-grafico3-engajamento');
+  });
+
+  document.getElementById('btn-g3-engajamento-ok').addEventListener('click', () => {
+    if (!validarSliders(["g3_e1","g3_e2","g3_e3"], "g3-engajamento-erro")) {
+      return;
+    }
+    const e1 = parseInt(document.getElementById('g3_e1').value);
+    const e2 = parseInt(document.getElementById('g3_e2').value);
+    const e3 = parseInt(document.getElementById('g3_e3').value);
+    respostas.grafico3.engajamento = [e1, e2, e3];
+    salvarLocalStorage();
+
+    finalizarExperimento();
+  });
+});
+
