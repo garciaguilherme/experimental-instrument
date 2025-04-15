@@ -61,7 +61,7 @@ function enviarDadosAoSheetDB(dataExport) {
   const dadosSheetDB = {
     data: [{
       timestamp: new Date().toISOString(),
-      letramento_nivel: dataExport.letramento_nivel,
+      letramento_nivel: dataExport.respostas.q1, // ou dataExport.letramento_nivel se preferir
       grupo_visual: dataExport.grupo_visual,
       tempo_total_segundos: dataExport.tempo_total_segundos,
       q1: dataExport.respostas.q1,
@@ -81,7 +81,9 @@ function enviarDadosAoSheetDB(dataExport) {
       g3_distracao: dataExport.respostas.grafico3.distracao || '',
       g3_memoria: dataExport.respostas.grafico3.memoria || '',
       g3_engajamento: (dataExport.respostas.grafico3.engajamento || []).join(', '),
-      finalEngajamento: JSON.stringify(dataExport.respostas.finalEngajamento || {})
+      final_e1: dataExport.respostas.finalEngajamento.final_e1 || '',
+      final_e2: dataExport.respostas.finalEngajamento.final_e2 || '',
+      final_e3: dataExport.respostas.finalEngajamento.final_e3 || ''
     }]
   };
 
@@ -127,8 +129,8 @@ function finalizarExperimento() {
 // ================================
 // FUNÇÕES PARA SLIDERS (1-5, sem valor inicial)
 // ================================
-// Caso seus sliders sejam utilizados em outros contextos, a função atualizarValorSlider permanece.
-// Para a tela final, usaremos radio buttons (estrutura Likert), assim essa função não será chamada para eles.
+// Se os sliders forem usados em outras telas, a função atualizarValorSlider permanece.
+// Para a tela final, estamos usando radio buttons, portanto essa função não será chamada para eles.
 function atualizarValorSlider(sliderId, labelId) {
   const slider = document.getElementById(sliderId);
   const label = document.getElementById(labelId);
@@ -149,7 +151,7 @@ function atualizarValorSlider(sliderId, labelId) {
   slider.setAttribute("aria-valuenow", slider.value);
 }
 
-// Inicializa o slider "final_e1" se for utilizado em outro contexto
+// Se necessário, inicialize algum slider usando atualizarValorSlider (não para a tela final Likert)
 // atualizarValorSlider("final_e1", "final_e1_value");
 
 function validarSliders(sliderIds, erroId) {
@@ -181,7 +183,7 @@ function getLikertResponse(name) {
 window.addEventListener('DOMContentLoaded', () => {
   console.log("DOM totalmente carregado");
   console.log("btn-iniciar:", document.getElementById('btn-iniciar'));
-  
+
   // TELA INICIAL
   document.getElementById('btn-iniciar').addEventListener('click', () => {
     console.log("Botão Iniciar clicado!");
@@ -358,6 +360,7 @@ window.addEventListener('DOMContentLoaded', () => {
       alert("Por favor, selecione uma resposta para cada pergunta.");
       return;
     }
+    // Aqui usamos a propriedade com o nome corrigido: finalEngajamento
     respostas.finalEngajamento = { final_e1: r1, final_e2: r2, final_e3: r3 };
     alert("Obrigado por participar!");
     salvarLocalStorage();
