@@ -106,7 +106,7 @@
   <section id="tela-transicao" class="tela" aria-label="Tela de transição">
     <div class="conteudo">
       <h2>Instruções</h2>
-      <p>Agora, você visualizará três gráficos e responderá perguntas de compreensão, memória e engajamento (Likert em sliders). Haverá ainda tarefas de distração que exigem respostas mínimas.</p>
+      <p>Agora, você visualizará três gráficos e responderá perguntas variadas.</p>
       <button id="btn-avancar-transicao">Avançar</button>
     </div>
   </section>
@@ -116,21 +116,21 @@
     <div class="conteudo">
       <img id="grafico1-img" src="../Análise Estatística/grafico.svg" alt="Gráfico de Barras" class="grafico" />
       <div class="pergunta">
-        <p>Pergunta de Compreensão:</p>
-        <label><input type="radio" name="g1_compreensao" value="a" required />Opção A</label>
-        <label><input type="radio" name="g1_compreensao" value="b" />Opção B</label>
-        <label><input type="radio" name="g1_compreensao" value="c" />Opção C</label>
-        <label><input type="radio" name="g1_compreensao" value="d" />Opção D</label>
+        <p>Em relação à proporção de domicílios atendidos por coleta de lixo nas diferentes regiões brasileiras, qual das alternativas está correta?</p>
+        <label><input type="radio" name="g2_compreensao" value="a" />A região Norte apresenta a maior cobertura de coleta de lixo.</label>
+        <label><input type="radio" name="g2_compreensao" value="b" />A região Sudeste é a única onde todos os domicílios são atendidos.</label>
+        <label><input type="radio" name="g2_compreensao" value="c" />A região Nordeste tem cobertura inferior à média nacional.</label>
+        <label><input type="radio" name="g2_compreensao" value="d" />Todas as regiões têm níveis semelhantes de cobertura de coleta.</label>
       </div>
-      <button id="btn-g1-compreensao-ok">Confirmar Compreensão</button>
+      <button id="btn-g1-compreensao-ok">Confirmar</button>
     </div>
   </section>
 
   <!-- Distração G1 -->
   <section id="tela-grafico1-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 1">
     <div class="conteudo">
-      <h2>Tarefa de Distração (Gráfico 1)</h2>
-      <p>Digite o alfabeto ao contrário (mínimo 3 caracteres):</p>
+      <h2></h2>
+      <p>Digite pernilongo ao contrário:</p>
       <input type="text" id="g1-distracao-input" placeholder="Ex.: z y x w..." aria-label="Campo para digitar o alfabeto ao contrário" />
       <p id="g1-distracao-erro" class="invalido" style="display:none;">É necessário digitar ao menos 3 caracteres.</p>
       <button id="btn-g1-distracao-fim">Prosseguir</button>
@@ -140,15 +140,14 @@
   <!-- Memória G1 -->
   <section id="tela-grafico1-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 1">
     <div class="conteudo">
-      <h2>Pergunta de Memória — Gráfico 1</h2>
-      <p>(Pergunta sobre algo exibido no gráfico anteriormente.)</p>
+      <h2>Qual região brasileira apresentou o maior percentual de domicílios atendidos por coleta de lixo?</h2>
       <div class="pergunta">
-        <label><input type="radio" name="g1_memoria" value="a" required />Opção A</label>
-        <label><input type="radio" name="g1_memoria" value="b" />Opção B</label>
-        <label><input type="radio" name="g1_memoria" value="c" />Opção C</label>
-        <label><input type="radio" name="g1_memoria" value="d" />Opção D</label>
+        <label><input type="radio" name="g1_memoria" value="a" required />Norte</label>
+        <label><input type="radio" name="g1_memoria" value="b" required  />Centro-Oeste</label>
+        <label><input type="radio" name="g1_memoria" value="c" required  />Sudeste</label>
+        <label><input type="radio" name="g1_memoria" value="d" required  />Nordeste</label>
       </div>
-      <button id="btn-g1-memoria-ok">Confirmar Memória</button>
+      <button id="btn-g1-memoria-ok">Confirmar</button>
     </div>
   </section>
 
@@ -159,21 +158,22 @@
     <div class="conteudo">
       <img id="grafico2-img" src="" alt="Gráfico de Linha" class="grafico" />
       <div class="pergunta">
-        <p>Pergunta de Compreensão:</p>
-        <label><input type="radio" name="g2_compreensao" value="a" required />Opção A</label>
-        <label><input type="radio" name="g2_compreensao" value="b" />Opção B</label>
-        <label><input type="radio" name="g2_compreensao" value="c" />Opção C</label>
-        <label><input type="radio" name="g2_compreensao" value="d" />Opção D</label>
+        <p>Qual das seguintes afirmações descreve corretamente a mudança na população brasileira ao longo
+          do tempo?</p>
+        <label><input type="radio" name="g1_compreensao" value="a" required />A população urbana ultrapassou a rural na década de 1960.</label>
+        <label><input type="radio" name="g1_compreensao" value="b" />A população rural cresceu mais rapidamente que a urbana entre 1950 e 1980.</label>
+        <label><input type="radio" name="g1_compreensao" value="c" />A população urbana e a rural permaneceram estáveis desde 1950.</label>
+        <label><input type="radio" name="g1_compreensao" value="d" />A população rural voltou a ser maior que a urbana após 2010.</label>
       </div>
-      <button id="btn-g2-compreensao-ok">Confirmar Compreensão</button>
+      <button id="btn-g2-compreensao-ok">Confirmar</button>
     </div>
   </section>
 
   <!-- Distração G2 -->
   <section id="tela-grafico2-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 2">
     <div class="conteudo">
-      <h2>Tarefa de Distração (Gráfico 2)</h2>
-      <p>Digite 3 animais que comecem com a letra “C” (ex.: cachorro, coelho...):</p>
+      <h2></h2>
+      <p>Digite 3 animais que comecem com a letra “C”:</p>
       <input type="text" id="g2-distracao-input" placeholder="Ex.: cachorro coelho cavalo" aria-label="Digite aqui 3 animais com c" />
       <p id="g2-distracao-erro" class="invalido" style="display:none;">Você precisa informar ao menos 3 palavras.</p>
       <button id="btn-g2-distracao-fim">Prosseguir</button>
@@ -182,14 +182,14 @@
 
   <section id="tela-grafico2-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 2">
     <div class="conteudo">
-      <h2>Pergunta de Memória — Gráfico 2</h2>
+      <h2>Em que década a população urbana superou a rural no Brasil, de acordo com o gráfico?</h2>
       <div class="pergunta">
-        <label><input type="radio" name="g2_memoria" value="a" required />Opção A</label>
-        <label><input type="radio" name="g2_memoria" value="b" />Opção B</label>
-        <label><input type="radio" name="g2_memoria" value="c" />Opção C</label>
-        <label><input type="radio" name="g2_memoria" value="d" />Opção D</label>
+        <label><input type="radio" name="g2_memoria" value="a" required />1950</label>
+        <label><input type="radio" name="g2_memoria" value="b" />1960</label>
+        <label><input type="radio" name="g2_memoria" value="c" />1970</label>
+        <label><input type="radio" name="g2_memoria" value="d" />1980</label>
       </div>
-      <button id="btn-g2-memoria-ok">Confirmar Memória</button>
+      <button id="btn-g2-memoria-ok">Confirmar</button>
     </div>
   </section>
 
@@ -200,21 +200,21 @@
     <div class="conteudo">
       <img id="grafico3-img" src="" alt="Gráfico Waffle" class="grafico" />
       <div class="pergunta">
-        <p>Pergunta de Compreensão:</p>
-        <label><input type="radio" name="g3_compreensao" value="a" required />Opção A</label>
-        <label><input type="radio" name="g3_compreensao" value="b" />Opção B</label>
-        <label><input type="radio" name="g3_compreensao" value="c" />Opção C</label>
-        <label><input type="radio" name="g3_compreensao" value="d" />Opção D</label>
+        <p>O gráfico representa a divisão da população brasileira por sexo. Qual das opções abaixo corresponde corretamente aos dados apresentados?</p>
+        <label><input type="radio" name="g3_compreensao" value="a" required />A população masculina é ligeiramente maior que a feminina.</label>
+        <label><input type="radio" name="g3_compreensao" value="b" />Homens e mulheres têm participação praticamente igual na população total.</label>
+        <label><input type="radio" name="g3_compreensao" value="c" />Mulheres representam mais da metade da população.</label>
+        <label><input type="radio" name="g3_compreensao" value="d" />A população feminina é duas vezes maior que a masculina.</label>
       </div>
-      <button id="btn-g3-compreensao-ok">Confirmar Compreensão</button>
+      <button id="btn-g3-compreensao-ok">Confirmar</button>
     </div>
   </section>
 
   <!-- Distração G3 -->
   <section id="tela-grafico3-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 3">
     <div class="conteudo">
-      <h2>Tarefa de Distração (Gráfico 3)</h2>
-      <p>Digite 2 frutas que comecem com a letra “M” (ex.: maçã, melão):</p>
+      <h2></h2>
+      <p>Digite 2 frutas que comecem com a letra “M”:</p>
       <input type="text" id="g3-distracao-input" placeholder="Ex.: maçã melão" aria-label="Digite 2 frutas com M" />
       <p id="g3-distracao-erro" class="invalido" style="display:none;">Você precisa informar ao menos 2 palavras.</p>
       <button id="btn-g3-distracao-fim">Prosseguir</button>
@@ -223,34 +223,34 @@
 
   <section id="tela-grafico3-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 3">
     <div class="conteudo">
-      <h2>Pergunta de Memória — Gráfico 3</h2>
+      <h2>Qual a proporção aproximada entre mulheres e homens na população brasileira, conforme indicado no gráfico?</h2>
       <div class="pergunta">
-        <label><input type="radio" name="g3_memoria" value="a" required />Opção A</label>
-        <label><input type="radio" name="g3_memoria" value="b" />Opção B</label>
-        <label><input type="radio" name="g3_memoria" value="c" />Opção C</label>
-        <label><input type="radio" name="g3_memoria" value="d" />Opção D</label>
+        <label><input type="radio" name="g3_memoria" value="a" required />40% mulheres e 60% homens</label>
+        <label><input type="radio" name="g3_memoria" value="b" />50% mulheres e 50% homens</label>
+        <label><input type="radio" name="g3_memoria" value="c" />51% mulheres e 49% homens</label>
+        <label><input type="radio" name="g3_memoria" value="d" />60% mulheres e 40% homens</label>
       </div>
-      <button id="btn-g3-memoria-ok">Confirmar Memória</button>
+      <button id="btn-g3-memoria-ok">Confirmar</button>
     </div>
   </section>
 
 
   <section id="tela-engajamento-final" class="tela" aria-label="Escala de Engajamento Geral">
     <div class="conteudo">
-      <h2>Escala de Engajamento — Todos os Gráficos</h2>
+      <h2>As perguntas se referem a todos os gráficos vistos</h2>
       <p>Arraste os sliders de 1 (discordo totalmente) a 5 (concordo totalmente).</p>
       <div class="slider-likert">
-        <label for="final_e1">1) Os gráficos ajudaram a compreender os dados.</label>
+        <label for="final_e1">1) O gráfico me deixou curioso para saber mais sobre o tema.</label>
         <input type="range" id="final_e1" name="final_e1" min="1" max="5" step="1" value="0" aria-label="Slider de engajamento final 1" />
         <span class="valor-selecionado" id="final_e1_value">(não selecionado)</span>
       </div>
       <div class="slider-likert">
-        <label for="final_e2">2) As visualizações foram visualmente atrativas.</label>
+        <label for="final_e2">2) O gráfico despertou meu interesse pelo assunto apresentado.</label>
         <input type="range" id="final_e2" name="final_e2" min="1" max="5" step="1" value="0" aria-label="Slider de engajamento final 2" />
         <span class="valor-selecionado" id="final_e2_value">(não selecionado)</span>
       </div>
       <div class="slider-likert">
-        <label for="final_e3">3) Me senti engajado(a) durante o experimento.</label>
+        <label for="final_e3">3) Gostaria de ver mais visualizações como essa em outras situações.</label>
         <input type="range" id="final_e3" name="final_e3" min="1" max="5" step="1" value="0" aria-label="Slider de engajamento final 3" />
         <span class="valor-selecionado" id="final_e3_value">(não selecionado)</span>
       </div>
