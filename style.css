@@ -72,6 +72,35 @@
 
   }
 
+  .likert {
+    margin: 10px 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .likert li {
+    float: left;
+    list-style-type: none;
+    margin: 0 5px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  .likert li.extremo {
+    font-weight: bold;
+    padding: 0 5px;
+  }
+  /* Estilo para os inputs para que fiquem centralizados */
+  .likert li input[type="radio"] {
+    vertical-align: middle;
+    margin: 0 2px;
+  }
+  /* Limpa os floats */
+  .pergunta:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
   .tela {
     position: relative;
     z-index: 1;

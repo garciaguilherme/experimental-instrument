@@ -1,4 +1,3 @@
-
 // ================================
 // VARIÁVEIS GLOBAIS
 // ================================
@@ -8,7 +7,8 @@ let respostas = {
   letramento: {},
   grafico1: {},
   grafico2: {},
-  grafico3: {}
+  grafico3: {},
+  finalEngajamento: {}       // Armazenará as respostas Likert da tela final
 };
 let tempoInicio = Date.now();
 
@@ -80,7 +80,8 @@ function enviarDadosAoSheetDB(dataExport) {
       g3_compreensao: dataExport.respostas.grafico3.compreensao || '',
       g3_distracao: dataExport.respostas.grafico3.distracao || '',
       g3_memoria: dataExport.respostas.grafico3.memoria || '',
-      g3_engajamento: (dataExport.respostas.grafico3.engajamento || []).join(', ')
+      g3_engajamento: (dataExport.respostas.grafico3.engajamento || []).join(', '),
+      finalEngajamento: JSON.stringify(dataExport.respostas.finalEngajamento || {})
     }]
   };
 
@@ -113,7 +114,8 @@ function finalizarExperimento() {
       q5: respostas.letramento.q5 || [],
       grafico1: respostas.grafico1,
       grafico2: respostas.grafico2,
-      grafico3: respostas.grafico3
+      grafico3: respostas.grafico3,
+      finalEngajamento: respostas.finalEngajamento || {}
     },
     tempo_total_segundos: obterTempoTotal()
   };
@@ -125,25 +127,30 @@ function finalizarExperimento() {
 // ================================
 // FUNÇÕES PARA SLIDERS (1-5, sem valor inicial)
 // ================================
+// Caso seus sliders sejam utilizados em outros contextos, a função atualizarValorSlider permanece.
+// Para a tela final, usaremos radio buttons (estrutura Likert), assim essa função não será chamada para eles.
 function atualizarValorSlider(sliderId, labelId) {
   const slider = document.getElementById(sliderId);
   const label = document.getElementById(labelId);
-  
-  if (!slider || !label) return; // <- impede erro se elemento não existir
+  if (!slider || !label) return;
 
   slider.addEventListener('input', () => {
+    slider.classList.remove('untouched');
     let valor = parseInt(slider.value);
-    if (valor < 1) valor = 1;
-    if (valor > 5) valor = 5;
-    label.textContent = valor.toString();
+    if (valor === 0) {
+      label.textContent = "(não selecionado)";
+    } else {
+      label.textContent = valor.toString();
+    }
     slider.setAttribute("aria-valuenow", valor);
-    slider.value = valor;
   });
 
   label.textContent = "(não selecionado)";
-  slider.setAttribute("aria-valuenow", 0);
+  slider.setAttribute("aria-valuenow", slider.value);
 }
 
+// Inicializa o slider "final_e1" se for utilizado em outro contexto
+// atualizarValorSlider("final_e1", "final_e1_value");
 
 function validarSliders(sliderIds, erroId) {
   let valido = true;
@@ -157,25 +164,24 @@ function validarSliders(sliderIds, erroId) {
   return valido;
 }
 
+// Função para obter resposta Likert (para radio buttons)
+function getLikertResponse(name) {
+  const radios = document.getElementsByName(name);
+  for (let i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+      return radios[i].value;
+    }
+  }
+  return null;
+}
+
 // ================================
 // EVENTOS AO CARREGAR A PÁGINA
 // ================================
 window.addEventListener('DOMContentLoaded', () => {
   console.log("DOM totalmente carregado");
   console.log("btn-iniciar:", document.getElementById('btn-iniciar'));
-  // Sliders: atualiza exibição
- // atualizarValorSlider("g1_e1", "g1_e1_value");
- // atualizarValorSlider("g1_e2", "g1_e2_value");
- // atualizarValorSlider("g1_e3", "g1_e3_value");
-
-//  atualizarValorSlider("g2_e1", "g2_e1_value");
-//  atualizarValorSlider("g2_e2", "g2_e2_value");
- // atualizarValorSlider("g2_e3", "g2_e3_value");
-
-//  atualizarValorSlider("g3_e1", "g3_e1_value");
-//  atualizarValorSlider("g3_e2", "g3_e2_value");
- // atualizarValorSlider("g3_e3", "g3_e3_value");
-
+  
   // TELA INICIAL
   document.getElementById('btn-iniciar').addEventListener('click', () => {
     console.log("Botão Iniciar clicado!");
@@ -222,7 +228,6 @@ window.addEventListener('DOMContentLoaded', () => {
     salvarLocalStorage();
     mostrarTela('tela-grafico1-distracao');
     document.getElementById('g1-distracao-input').focus();
-
   });
 
   document.getElementById('btn-g1-distracao-fim').addEventListener('click', () => {
@@ -252,10 +257,7 @@ window.addEventListener('DOMContentLoaded', () => {
     g2Img.src = grupoVisual === "controle"
       ? "assets/graficos/grafico2_linha_controle.svg"
       : "assets/graficos/grafico2_linha_experimental.svg";
-
   });
-
-  
 
   // GRÁFICO 2
   document.getElementById('btn-g2-compreensao-ok').addEventListener('click', () => {
@@ -277,7 +279,7 @@ window.addEventListener('DOMContentLoaded', () => {
       erroElem.style.display = "block";
       return;
     }
-    let palavras = inputVal.split(/\s+/).filter(Boolean); 
+    let palavras = inputVal.split(/\s+/).filter(Boolean);
     if (palavras.length < 3) {
       erroElem.style.display = "block";
       return;
@@ -287,7 +289,6 @@ window.addEventListener('DOMContentLoaded', () => {
     respostas.grafico2.distracao = inputVal;
     salvarLocalStorage();
     mostrarTela('tela-grafico2-memoria');
-    
   });
 
   document.getElementById('btn-g2-memoria-ok').addEventListener('click', () => {
@@ -296,7 +297,6 @@ window.addEventListener('DOMContentLoaded', () => {
       alert("Selecione uma resposta de memória.");
       return;
     }
-    
     respostas.grafico2.memoria = sel.value;
     salvarLocalStorage();
     mostrarTela('tela-grafico3');
@@ -305,8 +305,6 @@ window.addEventListener('DOMContentLoaded', () => {
       ? "assets/graficos/grafico3_waffle_controle.png"
       : "assets/graficos/grafico3_waffle_experimental.png";
   });
-  
-
 
   // GRÁFICO 3
   document.getElementById('btn-g3-compreensao-ok').addEventListener('click', () => {
@@ -318,9 +316,8 @@ window.addEventListener('DOMContentLoaded', () => {
     respostas.grafico3.compreensao = sel.value;
     salvarLocalStorage();
     mostrarTela('tela-grafico3-distracao');
-    document.getElementById('g3-distracao-input').focus(); // opcional
+    document.getElementById('g3-distracao-input').focus();
   });
-  
 
   document.getElementById('btn-g3-distracao-fim').addEventListener('click', () => {
     const inputVal = document.getElementById('g3-distracao-input').value.trim();
@@ -329,7 +326,7 @@ window.addEventListener('DOMContentLoaded', () => {
       erroElem.style.display = "block";
       return;
     }
-    let palavras = inputVal.split(/\s+/).filter(Boolean); 
+    let palavras = inputVal.split(/\s+/).filter(Boolean);
     if (palavras.length < 2) {
       erroElem.style.display = "block";
       return;
@@ -350,11 +347,18 @@ window.addEventListener('DOMContentLoaded', () => {
     respostas.grafico3.memoria = sel.value;
     salvarLocalStorage();
     mostrarTela('tela-engajamento-final');
-
   });
 
+  // FINAL ENGAGEMENT (Likert radio buttons)
   document.getElementById('btn-final-engajamento-ok').addEventListener('click', () => {
-    if (!validarSliders(["final_e1", "final_e2", "final_e3"], "final-engajamento-erro")) return;
+    const r1 = getLikertResponse("final_e1");
+    const r2 = getLikertResponse("final_e2");
+    const r3 = getLikertResponse("final_e3");
+    if (r1 === null || r2 === null || r3 === null) {
+      alert("Por favor, selecione uma resposta para cada pergunta.");
+      return;
+    }
+    respostas.finalEngajamento = { final_e1: r1, final_e2: r2, final_e3: r3 };
     alert("Obrigado por participar!");
     salvarLocalStorage();
     finalizarExperimento();

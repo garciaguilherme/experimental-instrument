@@ -239,20 +239,43 @@
     <div class="conteudo">
       <h2>As perguntas se referem a todos os gráficos vistos</h2>
       <p>Arraste os sliders de 1 (discordo totalmente) a 5 (concordo totalmente).</p>
-      <div class="slider-likert">
-        <label for="final_e1">1) O gráfico me deixou curioso para saber mais sobre o tema.</label>
-        <input type="range" id="final_e1" name="final_e1" min="1" max="5" step="1" value="0" aria-label="Slider de engajamento final 1" />
-        <span class="valor-selecionado" id="final_e1_value">(não selecionado)</span>
+  <div class="pergunta">
+          <p>1) Os gráficos ajudaram a compreender os dados.</p>
+          <ul class="likert">
+            <li class="extremo">Discordo totalmente</li>
+            <li><input type="radio" name="final_e1" value="1" /></li>
+            <li><input type="radio" name="final_e1" value="2" /></li>
+            <li><input type="radio" name="final_e1" value="3" /></li>
+            <li><input type="radio" name="final_e1" value="4" /></li>
+            <li><input type="radio" name="final_e1" value="5" /></li>
+            <li class="extremo">Concordo totalmente</li>
+          </ul>
+  </div>
+
+<div class="pergunta">
+        <p>2) O gráfico despertou meu interesse pelo assunto apresentado.</p>
+        <ul class="likert">
+          <li class="extremo">Discordo totalmente</li>
+          <li><input type="radio" name="final_e2" value="1" /></li>
+          <li><input type="radio" name="final_e2" value="2" /></li>
+          <li><input type="radio" name="final_e2" value="3" /></li>
+          <li><input type="radio" name="final_e2" value="4" /></li>
+          <li><input type="radio" name="final_e2" value="5" /></li>
+          <li class="extremo">Concordo totalmente</li>
+        </ul>
       </div>
-      <div class="slider-likert">
-        <label for="final_e2">2) O gráfico despertou meu interesse pelo assunto apresentado.</label>
-        <input type="range" id="final_e2" name="final_e2" min="1" max="5" step="1" value="0" aria-label="Slider de engajamento final 2" />
-        <span class="valor-selecionado" id="final_e2_value">(não selecionado)</span>
-      </div>
-      <div class="slider-likert">
-        <label for="final_e3">3) Gostaria de ver mais visualizações como essa em outras situações.</label>
-        <input type="range" id="final_e3" name="final_e3" min="1" max="5" step="1" value="0" aria-label="Slider de engajamento final 3" />
-        <span class="valor-selecionado" id="final_e3_value">(não selecionado)</span>
+
+      <div class="perguntat">
+        <p>3) Gostaria de ver mais visualizações como essa em outras situações.</p>
+        <ul class="likert">
+          <li class="extremo">Discordo totalmente</li>
+          <li><input type="radio" name="final_e3" value="1" /></li>
+          <li><input type="radio" name="final_e3" value="2" /></li>
+          <li><input type="radio" name="final_e3" value="3" /></li>
+          <li><input type="radio" name="final_e3" value="4" /></li>
+          <li><input type="radio" name="final_e3" value="5" /></li>
+          <li class="extremo">Concordo totalmente</li>
+        </ul>
       </div>
       <p id="final-engajamento-erro" class="invalido" style="display:none;">Preencha todos os sliders para continuar.</p>
       <button id="btn-final-engajamento-ok">Finalizar</button>
