@@ -1,3 +1,4 @@
+
 // ================================
 // VARIÁVEIS GLOBAIS
 // ================================
@@ -160,6 +161,8 @@ function validarSliders(sliderIds, erroId) {
 // EVENTOS AO CARREGAR A PÁGINA
 // ================================
 window.addEventListener('DOMContentLoaded', () => {
+  console.log("DOM totalmente carregado");
+  console.log("btn-iniciar:", document.getElementById('btn-iniciar'));
   // Sliders: atualiza exibição
  // atualizarValorSlider("g1_e1", "g1_e1_value");
  // atualizarValorSlider("g1_e2", "g1_e2_value");
@@ -175,6 +178,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // TELA INICIAL
   document.getElementById('btn-iniciar').addEventListener('click', () => {
+    console.log("Botão Iniciar clicado!");
     mostrarTela('tela-letramento');
   });
 
@@ -292,6 +296,7 @@ window.addEventListener('DOMContentLoaded', () => {
       alert("Selecione uma resposta de memória.");
       return;
     }
+    
     respostas.grafico2.memoria = sel.value;
     salvarLocalStorage();
     mostrarTela('tela-grafico3');
@@ -301,14 +306,7 @@ window.addEventListener('DOMContentLoaded', () => {
       : "assets/graficos/grafico3_waffle_experimental.png";
   });
   
-    mostrarTela('tela-grafico3');
-    const g3Img = document.getElementById('grafico3-img');
-    if (grupoVisual === "controle") {
-      g3Img.src = "assets/graficos/grafico3_waffle_controle.png";
-    } else {
-      g3Img.src = "assets/graficos/grafico3_waffle_experimental.png";
-    }
-  });
+
 
   // GRÁFICO 3
   document.getElementById('btn-g3-compreensao-ok').addEventListener('click', () => {
@@ -359,11 +357,8 @@ window.addEventListener('DOMContentLoaded', () => {
     if (!validarSliders(["final_e1", "final_e2", "final_e3"], "final-engajamento-erro")) return;
     alert("Obrigado por participar!");
     salvarLocalStorage();
-
     finalizarExperimento();
     mostrarTela('tela-inicial'); // Ou redirecionamento/finalização real
-
+    localStorage.clear();
   });
-
-
-
+});
