@@ -61,7 +61,7 @@ function enviarDadosAoSheetDB(dataExport) {
   const dadosSheetDB = {
     data: [{
       timestamp: new Date().toISOString(),
-      letramento_nivel: dataExport.respostas.q1, // ou dataExport.letramento_nivel se preferir
+      letramento_nivel: dataExport.letramento_nivel,
       grupo_visual: dataExport.grupo_visual,
       tempo_total_segundos: dataExport.tempo_total_segundos,
       q1: dataExport.respostas.q1,
