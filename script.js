@@ -219,6 +219,8 @@ window.addEventListener('DOMContentLoaded', () => {
     respostas.grafico1.compreensao = sel.value;
     salvarLocalStorage();
     mostrarTela('tela-grafico1-distracao');
+    document.getElementById('g1-distracao-input').focus();
+
   });
 
   document.getElementById('btn-g1-distracao-fim').addEventListener('click', () => {
@@ -275,6 +277,7 @@ window.addEventListener('DOMContentLoaded', () => {
     respostas.grafico2.compreensao = sel.value;
     salvarLocalStorage();
     mostrarTela('tela-grafico2-distracao');
+    document.getElementById('g2-distracao-input').focus();
   });
 
   document.getElementById('btn-g2-distracao-fim').addEventListener('click', () => {
@@ -294,6 +297,7 @@ window.addEventListener('DOMContentLoaded', () => {
     respostas.grafico2.distracao = inputVal;
     salvarLocalStorage();
     mostrarTela('tela-grafico2-memoria');
+    
   });
 
   document.getElementById('btn-g2-memoria-ok').addEventListener('click', () => {
@@ -336,6 +340,7 @@ window.addEventListener('DOMContentLoaded', () => {
     respostas.grafico3.compreensao = sel.value;
     salvarLocalStorage();
     mostrarTela('tela-grafico3-distracao');
+    document.getElementById('g3-distracao-input').focus();
   });
 
   document.getElementById('btn-g3-distracao-fim').addEventListener('click', () => {
@@ -376,9 +381,19 @@ window.addEventListener('DOMContentLoaded', () => {
     const e2 = parseInt(document.getElementById('g3_e2').value);
     const e3 = parseInt(document.getElementById('g3_e3').value);
     respostas.grafico3.engajamento = [e1, e2, e3];
+    
+    mostrarTela('tela-engajamento-final');
+
+  });
+  document.getElementById('btn-final-engajamento-ok').addEventListener('click', () => {
+    if (!validarSliders(["final_e1", "final_e2", "final_e3"], "final-engajamento-erro")) return;
+    alert("Obrigado por participar!");
     salvarLocalStorage();
 
     finalizarExperimento();
+    mostrarTela('tela-inicial'); // Ou redirecionamento/finalização real
+
   });
+
 });
 

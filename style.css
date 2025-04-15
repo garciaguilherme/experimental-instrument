@@ -71,6 +71,17 @@
     padding: 0.9em 2em 2em 2em; /* padding vertical reduzido */
 
   }
+
+  .tela {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .tela.ativo {
+    display: block;
+    z-index: 10;
+  }
+  
   .tela.ativo {
     display: block;
   }
