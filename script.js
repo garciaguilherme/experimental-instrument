@@ -128,23 +128,21 @@ function atualizarValorSlider(sliderId, labelId) {
   const slider = document.getElementById(sliderId);
   const label = document.getElementById(labelId);
   
+  if (!slider || !label) return; // <- impede erro se elemento não existir
+
   slider.addEventListener('input', () => {
     let valor = parseInt(slider.value);
-    
-    // Força o valor para estar entre 1 e 5
     if (valor < 1) valor = 1;
     if (valor > 5) valor = 5;
-    
-    // Atualiza a exibição
     label.textContent = valor.toString();
     slider.setAttribute("aria-valuenow", valor);
-    slider.value = valor; // Atualiza o valor do slider
+    slider.value = valor;
   });
-  
-  // Inicializa como "não selecionado"
+
   label.textContent = "(não selecionado)";
   slider.setAttribute("aria-valuenow", 0);
 }
+
 
 function validarSliders(sliderIds, erroId) {
   let valido = true;
@@ -163,17 +161,17 @@ function validarSliders(sliderIds, erroId) {
 // ================================
 window.addEventListener('DOMContentLoaded', () => {
   // Sliders: atualiza exibição
-  atualizarValorSlider("g1_e1", "g1_e1_value");
-  atualizarValorSlider("g1_e2", "g1_e2_value");
-  atualizarValorSlider("g1_e3", "g1_e3_value");
+ // atualizarValorSlider("g1_e1", "g1_e1_value");
+ // atualizarValorSlider("g1_e2", "g1_e2_value");
+ // atualizarValorSlider("g1_e3", "g1_e3_value");
 
-  atualizarValorSlider("g2_e1", "g2_e1_value");
-  atualizarValorSlider("g2_e2", "g2_e2_value");
-  atualizarValorSlider("g2_e3", "g2_e3_value");
+//  atualizarValorSlider("g2_e1", "g2_e1_value");
+//  atualizarValorSlider("g2_e2", "g2_e2_value");
+ // atualizarValorSlider("g2_e3", "g2_e3_value");
 
-  atualizarValorSlider("g3_e1", "g3_e1_value");
-  atualizarValorSlider("g3_e2", "g3_e2_value");
-  atualizarValorSlider("g3_e3", "g3_e3_value");
+//  atualizarValorSlider("g3_e1", "g3_e1_value");
+//  atualizarValorSlider("g3_e2", "g3_e2_value");
+ // atualizarValorSlider("g3_e3", "g3_e3_value");
 
   // TELA INICIAL
   document.getElementById('btn-iniciar').addEventListener('click', () => {
@@ -245,27 +243,15 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     respostas.grafico1.memoria = sel.value;
     salvarLocalStorage();
-    mostrarTela('tela-grafico1-engajamento');
-  });
-
-  document.getElementById('btn-g1-engajamento-ok').addEventListener('click', () => {
-    if (!validarSliders(["g1_e1","g1_e2","g1_e3"], "g1-engajamento-erro")) {
-      return;
-    }
-    const e1 = parseInt(document.getElementById('g1_e1').value);
-    const e2 = parseInt(document.getElementById('g1_e2').value);
-    const e3 = parseInt(document.getElementById('g1_e3').value);
-    respostas.grafico1.engajamento = [e1, e2, e3];
-    salvarLocalStorage();
-
     mostrarTela('tela-grafico2');
     const g2Img = document.getElementById('grafico2-img');
-    if (grupoVisual === "controle") {
-      g2Img.src = "assets/graficos/grafico2_linha_controle.svg";
-    } else {
-      g2Img.src = "assets/graficos/grafico2_linha_experimental.svg";
-    }
+    g2Img.src = grupoVisual === "controle"
+      ? "assets/graficos/grafico2_linha_controle.svg"
+      : "assets/graficos/grafico2_linha_experimental.svg";
+
   });
+
+  
 
   // GRÁFICO 2
   document.getElementById('btn-g2-compreensao-ok').addEventListener('click', () => {
@@ -308,19 +294,13 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     respostas.grafico2.memoria = sel.value;
     salvarLocalStorage();
-    mostrarTela('tela-grafico2-engajamento');
+    mostrarTela('tela-grafico3');
+    const g3Img = document.getElementById('grafico3-img');
+    g3Img.src = grupoVisual === "controle"
+      ? "assets/graficos/grafico3_waffle_controle.png"
+      : "assets/graficos/grafico3_waffle_experimental.png";
   });
-
-  document.getElementById('btn-g2-engajamento-ok').addEventListener('click', () => {
-    if (!validarSliders(["g2_e1","g2_e2","g2_e3"], "g2-engajamento-erro")) {
-      return;
-    }
-    const e1 = parseInt(document.getElementById('g2_e1').value);
-    const e2 = parseInt(document.getElementById('g2_e2').value);
-    const e3 = parseInt(document.getElementById('g2_e3').value);
-    respostas.grafico2.engajamento = [e1, e2, e3];
-    salvarLocalStorage();
-
+  
     mostrarTela('tela-grafico3');
     const g3Img = document.getElementById('grafico3-img');
     if (grupoVisual === "controle") {
@@ -340,8 +320,9 @@ window.addEventListener('DOMContentLoaded', () => {
     respostas.grafico3.compreensao = sel.value;
     salvarLocalStorage();
     mostrarTela('tela-grafico3-distracao');
-    document.getElementById('g3-distracao-input').focus();
+    document.getElementById('g3-distracao-input').focus(); // opcional
   });
+  
 
   document.getElementById('btn-g3-distracao-fim').addEventListener('click', () => {
     const inputVal = document.getElementById('g3-distracao-input').value.trim();
@@ -370,21 +351,10 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     respostas.grafico3.memoria = sel.value;
     salvarLocalStorage();
-    mostrarTela('tela-grafico3-engajamento');
-  });
-
-  document.getElementById('btn-g3-engajamento-ok').addEventListener('click', () => {
-    if (!validarSliders(["g3_e1","g3_e2","g3_e3"], "g3-engajamento-erro")) {
-      return;
-    }
-    const e1 = parseInt(document.getElementById('g3_e1').value);
-    const e2 = parseInt(document.getElementById('g3_e2').value);
-    const e3 = parseInt(document.getElementById('g3_e3').value);
-    respostas.grafico3.engajamento = [e1, e2, e3];
-    
     mostrarTela('tela-engajamento-final');
 
   });
+
   document.getElementById('btn-final-engajamento-ok').addEventListener('click', () => {
     if (!validarSliders(["final_e1", "final_e2", "final_e3"], "final-engajamento-erro")) return;
     alert("Obrigado por participar!");
@@ -395,5 +365,5 @@ window.addEventListener('DOMContentLoaded', () => {
 
   });
 
-});
+
 
