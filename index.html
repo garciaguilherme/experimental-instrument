@@ -116,11 +116,11 @@
     <div class="conteudo">
       <img id="grafico1-img" src="../Análise Estatística/grafico.svg" alt="Gráfico de Barras" class="grafico" />
       <div class="pergunta">
-        <p>Em relação à proporção de domicílios atendidos por coleta de lixo nas diferentes regiões brasileiras, qual das alternativas está correta?</p>
-        <label><input type="radio" name="g1_compreensao" value="a" />A região Norte apresenta a maior cobertura de coleta de lixo.</label>
-        <label><input type="radio" name="g1_compreensao" value="b" />A região Sudeste é a única onde todos os domicílios são atendidos.</label>
-        <label><input type="radio" name="g1_compreensao" value="c" />A região Nordeste tem cobertura inferior à média nacional.</label>
-        <label><input type="radio" name="g1_compreensao" value="d" />Todas as regiões têm níveis semelhantes de cobertura de coleta.</label>
+        <p>Em relação à proporção dos tipos de coleta disponíveis para os domicílios brasileiros, escolha a resposta correta:</p>
+        <label><input type="radio" name="g1_compreensao" value="a" />Há dez vezes mais domicílios com coleta direta do que domicílios sem nenhum tipo de coleta.</label>
+        <label><input type="radio" name="g1_compreensao" value="b" />Menos de 1 em cada 10 domicílios depositam o lixo em caçambas.</label>
+        <label><input type="radio" name="g1_compreensao" value="c" />Há mais domicílios sem coleta que os que depositam em caçambas.</label>
+        <label><input type="radio" name="g1_compreensao" value="d" />Não é possível comparar, pois tratam-se de grupos diferentes.</label>
       </div>
       <button id="btn-g1-compreensao-ok">Confirmar</button>
     </div>
@@ -130,7 +130,7 @@
   <section id="tela-grafico1-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 1">
     <div class="conteudo">
       <h2></h2>
-      <p>Digite pernilongo ao contrário:</p>
+      <p>Digite gato ao contrário:</p>
       <input type="text" id="g1-distracao-input" placeholder="Ex.: z y x w..." aria-label="Campo para digitar o alfabeto ao contrário" />
       <p id="g1-distracao-erro" class="invalido" style="display:none;">É necessário digitar ao menos 3 caracteres.</p>
       <button id="btn-g1-distracao-fim">Prosseguir</button>
@@ -140,12 +140,11 @@
   <!-- Memória G1 -->
   <section id="tela-grafico1-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 1">
     <div class="conteudo">
-      <h2>Qual região brasileira apresentou o maior percentual de domicílios atendidos por coleta de lixo?</h2>
+      <h2>Qual o tipo de coleta de lixo mais comum no Brasil?</h2>
       <div class="pergunta">
-        <label><input type="radio" name="g1_memoria" value="a" required />Norte</label>
-        <label><input type="radio" name="g1_memoria" value="b" required  />Centro-Oeste</label>
-        <label><input type="radio" name="g1_memoria" value="c" required  />Sudeste</label>
-        <label><input type="radio" name="g1_memoria" value="d" required  />Nordeste</label>
+        <label><input type="radio" name="g1_memoria" value="a" required />Coleta no domicílio</label>
+        <label><input type="radio" name="g1_memoria" value="b" required  />Depositado em caçamba</label>
+        <label><input type="radio" name="g1_memoria" value="c" required  />Sem coleta</label>
       </div>
       <button id="btn-g1-memoria-ok">Confirmar</button>
     </div>
@@ -182,12 +181,10 @@
 
   <section id="tela-grafico2-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 2">
     <div class="conteudo">
-      <h2>Em que década a população urbana superou a rural no Brasil, de acordo com o gráfico?</h2>
+      <h2>Em 1950, qual era a situação da maior parte da população brasileira?</h2>
       <div class="pergunta">
-        <label><input type="radio" name="g2_memoria" value="a" required />1950</label>
-        <label><input type="radio" name="g2_memoria" value="b" />1960</label>
-        <label><input type="radio" name="g2_memoria" value="c" />1970</label>
-        <label><input type="radio" name="g2_memoria" value="d" />1980</label>
+        <label><input type="radio" name="g2_memoria" value="a" required />Urbana</label>
+        <label><input type="radio" name="g2_memoria" value="b" />Rural</label>
       </div>
       <button id="btn-g2-memoria-ok">Confirmar</button>
     </div>
@@ -202,7 +199,7 @@
       <div class="pergunta">
         <p>O gráfico representa a divisão da população brasileira por sexo. Qual das opções abaixo corresponde corretamente aos dados apresentados?</p>
         <label><input type="radio" name="g3_compreensao" value="a" required />A população masculina é ligeiramente maior que a feminina.</label>
-        <label><input type="radio" name="g3_compreensao" value="b" />Homens e mulheres têm participação praticamente igual na população total.</label>
+        <label><input type="radio" name="g3_compreensao" value="b" />Homens e mulheres têm participação igual na população total.</label>
         <label><input type="radio" name="g3_compreensao" value="c" />Mulheres representam mais da metade da população.</label>
         <label><input type="radio" name="g3_compreensao" value="d" />A população feminina é duas vezes maior que a masculina.</label>
       </div>
@@ -228,7 +225,7 @@
         <label><input type="radio" name="g3_memoria" value="a" required />40% mulheres e 60% homens</label>
         <label><input type="radio" name="g3_memoria" value="b" />50% mulheres e 50% homens</label>
         <label><input type="radio" name="g3_memoria" value="c" />51% mulheres e 49% homens</label>
-        <label><input type="radio" name="g3_memoria" value="d" />60% mulheres e 40% homens</label>
+        <label><input type="radio" name="g3_memoria" value="d" />61% mulheres e 39% homens</label>
       </div>
       <button id="btn-g3-memoria-ok">Confirmar</button>
     </div>
@@ -238,7 +235,7 @@
   <section id="tela-engajamento-final" class="tela" aria-label="Escala de Engajamento Geral">
     <div class="conteudo">
       <h2>As perguntas se referem a todos os gráficos vistos</h2>
-      <p>Arraste os sliders de 1 (discordo totalmente) a 5 (concordo totalmente).</p>
+      <p>Selecione de 1 (discordo totalmente) a 5 (concordo totalmente) conforme sua opinião.</p>
   <div class="pergunta">
           <p>1) Os gráficos me deixaram curioso(a) para saber mais sobre o tema.</p>
           <ul class="likert">
