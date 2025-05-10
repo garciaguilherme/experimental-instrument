@@ -258,7 +258,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const g2Img = document.getElementById('grafico2-img');
     g2Img.src = grupoVisual === "controle"
       ? "assets/graficos/grafico2_linha_controle.svg"
-      : "assets/graficos/grafico2_linha_experimental.svg";
+      : "assets/graficos/grafico2_linha_experimental.png";
   });
 
   // GRÁFICO 2
