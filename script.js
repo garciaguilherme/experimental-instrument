@@ -30,7 +30,7 @@ function calcularNivelLetramento() {
   if (respostas.letramento.q3 === "d") pontos++;
   if (respostas.letramento.q4 === "a") pontos++;
   if (pontos <= 2) return "baixo";
-  if (pontos === 3) return "médio";
+  //if (pontos === 3) return "médio";
   return "alto";
 }
 
