@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <title>Experimento de Visualização</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
   <script src="script.js" defer></script>
 </head>
 <body>
-  <!-- Skip Link para acessibilidade (WCAG) -->
   <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
   <div id="progresso-container">
@@ -18,268 +20,244 @@
   <!-- ===================== TELA INICIAL ===================== -->
   <section id="tela-inicial" class="tela ativo" aria-label="Tela inicial do experimento">
     <div class="conteudo">
-      <img src="assets/logos/UERJ-ESDI.jpg" alt="Logo da Instituição" class="logo" />
+      <div class="logos-container">
+        <img src="assets/logos/UERJ-ESDI.jpg" alt="Logo ESDI" class="logo" />
+      </div>
       <h1>Bem-vindo(a)!</h1>
       <p>Este experimento avaliará seu letramento estatístico e sua percepção sobre diferentes gráficos.</p>
-      <p>Em nenhum momento você será julgado(a) como pessoa, e esta avaliação tem a finalidade única de avaliação dos gráficos.</p>
-      <p>Caso sinta algum desconforto, sinta-se livre para a qualquer momento interromper a realização do experimento, sem qualquer perda.</p>
+      <p>Em nenhum momento você será julgado(a) como pessoa, e esta avaliação tem a finalidade única de pesquisa.</p>
+      <p>Caso sinta algum desconforto, sinta-se livre para a qualquer momento interromper a realização do experimento.</p>
 
-      <p>Pesquisador responsável: Guilherme da Costa Garcia<br>
+      <p class="pesquisador-info">Pesquisador responsável: Guilherme da Costa Garcia<br>
       Contato: ggarcia@esdi.uerj.br</p>
-      <button id="btn-iniciar">Iniciar</button>
+      <button id="btn-iniciar" class="btn-primary">Iniciar</button>
     </div>
   </section>
 
-  <!-- ===================== TESTE DE LETRAMENTO ===================== -->
-  <section id="tela-letramento" class="tela" aria-label="Teste de letramento estatístico">
+  <!-- ===================== TESTE DE NUMERACIA ===================== -->
+  <section id="tela-numeracia" class="tela" aria-label="Teste de Numeracia">
     <div class="conteudo">
-      <h2>Responda às perguntas abaixo</h2>
-      <form id="form-letramento">
-        <!-- Q1 -->
-        <div class="pergunta">
-          <p>1) Um pequeno objeto foi pesado por nove estudantes em uma balança.<br>Os valores (g) foram:<br>
-            6,2 – 6,0 – 6,0 – 15,3 – 6,1 – 6,3 – 6,2 – 6,15 – 6,2</p>
-          <p>Os estudantes querem determinar o valor mais próximo possível do peso real do objeto.
-            <br>Qual das opções abaixo você recomendaria?</p>
-          <label><input type="radio" name="q1" value="a" required />Usar o número mais comum, que é 6,2.</label>
-          <label><input type="radio" name="q1" value="b" />Usar o 6,15, pois parece ser o mais preciso.</label>
-          <label><input type="radio" name="q1" value="c" />Somar os nove valores e dividir por 9.</label>
-          <label><input type="radio" name="q1" value="d" />Eliminar o 15,3, somar os outros e dividir por 8.</label>
+      <h2>Parte 1</h2>
+      <!-- Título original (para desenvolvedores): Testes Iniciais - Numeracia -->
+      <p class="instrucoes">Responda às questões abaixo com base nos seus conhecimentos matemáticos.</p>
+      <form id="form-numeracia">
+        <div class="pergunta-card">
+          <p><strong>1.</strong> Imagine que estamos lançando um dado de 5 faces 50 vezes. Em média, dessas 50 jogadas, quantas vezes esse dado de cinco faces mostraria um número ímpar (1, 3 ou 5)?</p>
+          <div class="input-group">
+            <input type="number" name="num1" required class="input-moderno" />
+            <span>de 50 jogadas</span>
+          </div>
+        </div>
+        <div class="pergunta-card">
+          <p><strong>2.</strong> De 1.000 pessoas em uma pequena cidade, 500 são membros de um coral. Desses 500 membros do coral, 100 são homens. Dos 500 habitantes que não estão no coral, 300 são homens. Qual é a probabilidade de que um homem selecionado aleatoriamente seja membro do coral?</p>
+          <div class="input-group">
+            <input type="number" name="num2" step="any" required class="input-moderno" />
+            <span>%</span>
+          </div>
+        </div>
+        <div class="pergunta-card">
+          <p><strong>3.</strong> Imagine que estamos lançando um dado viciado (6 faces). A probabilidade de o dado mostrar um 6 é duas vezes maior do que a probabilidade de cada um dos outros números. Em média, dessas 70 jogadas, quantas vezes o dado mostraria o número 6?</p>
+          <div class="input-group">
+            <input type="number" name="num3" required class="input-moderno" />
+            <span>de 70 jogadas</span>
+          </div>
+        </div>
+        <div class="pergunta-card">
+          <p><strong>4.</strong> Em uma floresta, 20% dos cogumelos são vermelhos, 50% são marrons e 30% são brancos. Um cogumelo vermelho é venenoso com probabilidade de 20%. Um cogumelo que não é vermelho é venenoso com probabilidade de 5%. Qual é a probabilidade de que um cogumelo venenoso na floresta seja vermelho?</p>
+          <div class="input-group">
+            <input type="number" name="num4" step="any" required class="input-moderno" />
+            <span>%</span>
+          </div>
         </div>
 
-        <!-- Q2 -->
-        <div class="pergunta">
-          <p>2) Está escrito no rótulo de um medicamento:<br>
-             <i>“ADVERTÊNCIA: Para uso na pele, há 15% de chance de desenvolver irritação. Se isso ocorrer, procure orientação médica.”</i></p>
- <p>Qual é a melhor interpretação desse aviso?</p>
-          <label><input type="radio" name="q2" value="a" required />Não use esse medicamento — a chance de irritação é alta.</label>
-          <label><input type="radio" name="q2" value="b" />Use só 15% da dose recomendada.</label>
-          <label><input type="radio" name="q2" value="c" />Se ocorrer irritação, afetará apenas 15% da pele.</label>
-          <label><input type="radio" name="q2" value="d" />Aproximadamente 15 em cada 100 pessoas terão irritação.</label>
-          <label><input type="radio" name="q2" value="e" />A chance de irritação é muito pequena, não se preocupe.</label>
-        </div>
-
-        <!-- Q3 -->
-        <div class="pergunta">
-          <p>3) Um centro meteorológico queria avaliar a precisão de suas previsões de 70% de chance de chuva.
-             <br>A previsão de 70% pode ser considerada precisa se choveu em:</p>
-          <label><input type="radio" name="q3" value="a" required />95% a 100% desses dias.</label>
-          <label><input type="radio" name="q3" value="b" />85% a 94% desses dias.</label>
-          <label><input type="radio" name="q3" value="c" />75% a 84% desses dias.</label>
-          <label><input type="radio" name="q3" value="d" />65% a 74% desses dias.</label>
-          <label><input type="radio" name="q3" value="e" />55% a 64% desses dias.</label>
-        </div>
-
-        <!-- Q4 -->
-        <div class="pergunta">
-          <p>4) Um novo medicamento para eczema foi testado com 30 pessoas, divididas aleatoriamente:<br>
-             <ul>
-                <li>Grupo medicado (20 pessoas): 8 melhoraram, 12 não.</li>
-                <li>Grupo controle (10 pessoas): 2 melhoraram, 8 não.</li>
-             </ul>
-             <br>
-             Qual a melhor conclusão?</p>
-          <label><input type="radio" name="q4" value="a" required />O medicamento foi um pouco eficaz (40% melhoraram vs 20% no controle).</label>
-          <label><input type="radio" name="q4" value="b" />O medicamento não foi eficaz, pois mais pessoas não melhoraram.</label>
-          <label><input type="radio" name="q4" value="c" />O número de melhoras pode ser mero acaso.</label>
-          <label><input type="radio" name="q4" value="d" />Não se pode concluir nada com tamanhos diferentes.</label>
-        </div>
-
-        <!-- Q5 (checkbox) -->
-        <div class="pergunta">
-          <p>5) Uma empresa pesquisou quanto os adolescentes gastam por ano com música em 80 shoppings.
-             Participaram 2.050 adolescentes, e a empresa concluiu que o gasto médio anual era R$ 155.<br>
-             Marque todas as alternativas com as quais você concorda:</p>
-          <label><input type="checkbox" name="q5" value="A" />A média pode estar incorreta, pois os adolescentes apenas estimaram gastos.</label>
-          <label><input type="checkbox" name="q5" value="B" />O número de shoppings foi pequeno para representar todo o país.</label>
-          <label><input type="checkbox" name="q5" value="C" />A média pode estar distorcida porque só adolescentes em shoppings participaram.</label>
-          <label><input type="checkbox" name="q5" value="D" />O ideal seria entrevistar adolescentes que saíssem de lojas de música.</label>
-          <label><input type="checkbox" name="q5" value="E" />A amostra foi suficientemente grande, então a média é confiável.</label>
-        </div>
-
-        <input type="submit" value="Enviar Respostas" />
+        <button type="submit" class="btn-primary">Avançar para Parte 2 (1/4)</button>
       </form>
     </div>
   </section>
 
-  <!-- ===================== TELA TRANSIÇÃO ===================== -->
+  <!-- ===================== TESTE MINI-VLAT PÁGINA 1 ===================== -->
+  <section id="tela-minivlat-1" class="tela" aria-label="Teste Mini-VLAT 1">
+    <div class="conteudo">
+      <h2>Parte 2 (1/4)</h2>
+      <!-- Título original: Letramento Visual Gráfico (Mini-VLAT) -->
+      <p class="instrucoes">Avalie os gráficos apresentados e responda às questões.</p>
+      <form id="form-minivlat-1">
+        
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q1]</em></div>
+          <p><strong>1.</strong> O eBay está aninhado (nested) na categoria Software.</p>
+          <label class="radio-label"><input type="radio" name="vlat1" value="Verdadeiro" required /> Verdadeiro</label>
+          <label class="radio-label"><input type="radio" name="vlat1" value="Falso" /> Falso</label>
+        </div>
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q2]</em></div>
+          <p><strong>2.</strong> Qual país tem a menor proporção de medalhas de Ouro?</p>
+          <label class="radio-label"><input type="radio" name="vlat2" value="EUA" required /> EUA</label>
+          <label class="radio-label"><input type="radio" name="vlat2" value="Grã-Bretanha" /> Grã-Bretanha</label>
+          <label class="radio-label"><input type="radio" name="vlat2" value="Japão" /> Japão</label>
+          <label class="radio-label"><input type="radio" name="vlat2" value="Austrália" /> Austrália</label>
+        </div>
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q3]</em></div>
+          <p><strong>3.</strong> Qual foi a distância mais percorrida pelos clientes?</p>
+          <label class="radio-label"><input type="radio" name="vlat3" value="a" required /> 60 – 70 km</label>
+          <label class="radio-label"><input type="radio" name="vlat3" value="b" /> 30 – 40 km</label>
+          <label class="radio-label"><input type="radio" name="vlat3" value="c" /> 20 – 30 km</label>
+          <label class="radio-label"><input type="radio" name="vlat3" value="d" /> 50 – 60 km</label>
+        </div>
+
+        <button type="submit" class="btn-primary">Avançar (2/4)</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== TESTE MINI-VLAT PÁGINA 2 ===================== -->
+  <section id="tela-minivlat-2" class="tela" aria-label="Teste Mini-VLAT 2">
+    <div class="conteudo">
+      <h2>Parte 2 (2/4)</h2>
+      <!-- Título original: Letramento Visual Gráfico (Mini-VLAT) -->
+      <p class="instrucoes">Avalie os gráficos apresentados e responda às questões.</p>
+      <form id="form-minivlat-2">
+        
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q4]</em></div>
+          <p><strong>4.</strong> Em 2020, a taxa de desemprego de Washington (WA) foi maior do que a de Wisconsin (WI).</p>
+          <label class="radio-label"><input type="radio" name="vlat4" value="Verdadeiro" required /> Verdadeiro</label>
+          <label class="radio-label"><input type="radio" name="vlat4" value="Falso" /> Falso</label>
+        </div>
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q5]</em></div>
+          <p><strong>5.</strong> Qual é a fatia aproximada do mercado global de smartphones (market share) da Samsung?</p>
+          <label class="radio-label"><input type="radio" name="vlat5" value="a" required /> 17,6%</label>
+          <label class="radio-label"><input type="radio" name="vlat5" value="b" /> 25,3%</label>
+          <label class="radio-label"><input type="radio" name="vlat5" value="c" /> 10,9%</label>
+          <label class="radio-label"><input type="radio" name="vlat5" value="d" /> 35,2%</label>
+        </div>
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q6]</em></div>
+          <p><strong>6.</strong> Qual cidade tem o maior número de estações de metrô?</p>
+          <label class="radio-label"><input type="radio" name="vlat6" value="a" required /> Pequim (Beijing)</label>
+          <label class="radio-label"><input type="radio" name="vlat6" value="b" /> Xangai (Shanghai)</label>
+          <label class="radio-label"><input type="radio" name="vlat6" value="c" /> Londres</label>
+          <label class="radio-label"><input type="radio" name="vlat6" value="d" /> Seul</label>
+        </div>
+
+        <button type="submit" class="btn-primary">Avançar (3/4)</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== TESTE MINI-VLAT PÁGINA 3 ===================== -->
+  <section id="tela-minivlat-3" class="tela" aria-label="Teste Mini-VLAT 3">
+    <div class="conteudo">
+      <h2>Parte 2 (3/4)</h2>
+      <!-- Título original: Letramento Visual Gráfico (Mini-VLAT) -->
+      <p class="instrucoes">Avalie os gráficos apresentados e responda às questões.</p>
+      <form id="form-minivlat-3">
+        
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q7]</em></div>
+          <p><strong>7.</strong> Qual é o preço do amendoim em Seul?</p>
+          <label class="radio-label"><input type="radio" name="vlat7" value="a" required /> $5,2</label>
+          <label class="radio-label"><input type="radio" name="vlat7" value="b" /> $6,1</label>
+          <label class="radio-label"><input type="radio" name="vlat7" value="c" /> $7,5</label>
+          <label class="radio-label"><input type="radio" name="vlat7" value="d" /> $4,5</label>
+        </div>
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q8]</em></div>
+          <p><strong>8.</strong> Qual foi o preço do barril de petróleo em fevereiro de 2020?</p>
+          <label class="radio-label"><input type="radio" name="vlat8" value="a" required /> $50,54</label>
+          <label class="radio-label"><input type="radio" name="vlat8" value="b" /> $47,02</label>
+          <label class="radio-label"><input type="radio" name="vlat8" value="c" /> $42,34</label>
+          <label class="radio-label"><input type="radio" name="vlat8" value="d" /> $43,48</label>
+        </div>
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q9]</em></div>
+          <p><strong>9.</strong> Qual é a velocidade média da internet no Japão?</p>
+          <label class="radio-label"><input type="radio" name="vlat9" value="a" required /> 42,30 Mbps</label>
+          <label class="radio-label"><input type="radio" name="vlat9" value="b" /> 40,51 Mbps</label>
+          <label class="radio-label"><input type="radio" name="vlat9" value="c" /> 35,25 Mbps</label>
+          <label class="radio-label"><input type="radio" name="vlat9" value="d" /> 16,16 Mbps</label>
+        </div>
+
+        <button type="submit" class="btn-primary">Avançar (4/4)</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== TESTE MINI-VLAT PÁGINA 4 ===================== -->
+  <section id="tela-minivlat-4" class="tela" aria-label="Teste Mini-VLAT 4">
+    <div class="conteudo">
+      <h2>Parte 2 (4/4)</h2>
+      <!-- Título original: Letramento Visual Gráfico (Mini-VLAT) -->
+      <p class="instrucoes">Avalie os gráficos apresentados e responda às questões.</p>
+      <form id="form-minivlat-4">
+        
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q10]</em></div>
+          <p><strong>10.</strong> Qual foi o preço médio de uma libra de café em outubro de 2019?</p>
+          <label class="radio-label"><input type="radio" name="vlat10" value="a" required /> $0,71</label>
+          <label class="radio-label"><input type="radio" name="vlat10" value="b" /> $0,90</label>
+          <label class="radio-label"><input type="radio" name="vlat10" value="c" /> $0,80</label>
+          <label class="radio-label"><input type="radio" name="vlat10" value="d" /> $0,63</label>
+        </div>
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q11]</em></div>
+          <p><strong>11.</strong> Qual foi a razão entre meninas chamadas "Isla" e meninas chamadas "Amelia" em 2012 no Reino Unido?</p>
+          <label class="radio-label"><input type="radio" name="vlat11" value="a" required /> 1 para 1</label>
+          <label class="radio-label"><input type="radio" name="vlat11" value="b" /> 1 para 2</label>
+          <label class="radio-label"><input type="radio" name="vlat11" value="c" /> 1 para 3</label>
+          <label class="radio-label"><input type="radio" name="vlat11" value="d" /> 1 para 4</label>
+        </div>
+        <div class="pergunta-card">
+          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q12]</em></div>
+            <p><strong>12.</strong> Existe uma relação negativa entre a altura e o peso dos 85 homens.</p>
+            <label class="radio-label"><input type="radio" name="vlat12" value="Verdadeiro" required /> Verdadeiro</label>
+            <label class="radio-label"><input type="radio" name="vlat12" value="Falso" /> Falso</label>
+        </div>
+
+        <button type="submit" class="btn-primary">Enviar Respostas Mini-VLAT</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===================== TELA DE TRANSIÇÃO ===================== -->
   <section id="tela-transicao" class="tela" aria-label="Tela de transição">
     <div class="conteudo">
-      <h2>Instruções</h2>
-      <p>Agora, você visualizará três gráficos e responderá perguntas variadas.</p>
-      <button id="btn-avancar-transicao">Avançar</button>
+      <h2>Instruções da Fase Principal</h2>
+      <p class="instrucoes">Você concluiu a etapa inicial de letramento. A partir de agora, você será exposto(a) a uma série de gráficos baseados em dados do Censo Demográfico 2022.<br><br>Para cada gráfico, pedimos que você responda a uma pergunta de compreensão e avalie sua experiência (engajamento, curiosidade e interesse) utilizando a escala apresentada.</p>
+      <button id="btn-avancar-transicao" class="btn-primary">Avançar para os Gráficos</button>
     </div>
   </section>
 
-  <!-- ===================== GRÁFICO 1 (BARRAS) ===================== -->
-  <section id="tela-grafico1" class="tela" aria-label="Gráfico de Barras sobre coleta de lixo">
-    <div class="conteudo">
-      <img id="grafico1-img" src="../Análise Estatística/grafico.svg" alt="Gráfico de Barras" class="grafico" />
-      <div class="pergunta">
-        <p>Em relação à proporção dos tipos de coleta disponíveis para os domicílios brasileiros, escolha a resposta correta:</p>
-        <label><input type="radio" name="g1_compreensao" value="a" />Há dez vezes mais domicílios com coleta direta do que domicílios sem nenhum tipo de coleta.</label>
-        <label><input type="radio" name="g1_compreensao" value="b" />Menos de 1 em cada 10 domicílios depositam o lixo em caçambas.</label>
-        <label><input type="radio" name="g1_compreensao" value="c" />Há mais domicílios sem coleta que os que depositam em caçambas.</label>
-        <label><input type="radio" name="g1_compreensao" value="d" />Não é possível comparar, pois tratam-se de grupos diferentes.</label>
-      </div>
-      <button id="btn-g1-compreensao-ok">Confirmar</button>
-    </div>
-  </section>
-
-  <!-- Distração G1 -->
-  <section id="tela-grafico1-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 1">
-    <div class="conteudo">
-      <h2></h2>
-      <p>Digite radar ao contrário:</p>
-      <input type="text" id="g1-distracao-input" placeholder="Ex.: z y x w..." aria-label="Campo para digitar o alfabeto ao contrário" />
-      <p id="g1-distracao-erro" class="invalido" style="display:none;">É necessário digitar ao menos 3 caracteres.</p>
-      <button id="btn-g1-distracao-fim">Prosseguir</button>
-    </div>
-  </section>
-
-  <!-- Memória G1 -->
-  <section id="tela-grafico1-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 1">
-    <div class="conteudo">
-      <h2>Qual o tipo de coleta de lixo mais comum no Brasil?</h2>
-      <div class="pergunta">
-        <label><input type="radio" name="g1_memoria" value="a" required />Coleta no domicílio</label>
-        <label><input type="radio" name="g1_memoria" value="b" required  />Depositado em caçamba</label>
-        <label><input type="radio" name="g1_memoria" value="c" required  />Sem coleta</label>
-      </div>
-      <button id="btn-g1-memoria-ok">Confirmar</button>
-    </div>
-  </section>
-
- 
-
-  <!-- ===================== GRÁFICO 2 (LINHA) ===================== -->
-  <section id="tela-grafico2" class="tela" aria-label="Gráfico de Linha sobre população urbana vs rural">
-    <div class="conteudo">
-      <img id="grafico2-img" src="" alt="Gráfico de Linha" class="grafico" />
-      <div class="pergunta">
-        <p>Qual das seguintes afirmações descreve corretamente a mudança na população brasileira ao longo
-          do tempo?</p>
-        <label><input type="radio" name="g2_compreensao" value="a" required />A população urbana ultrapassou a rural na década de 1960.</label>
-        <label><input type="radio" name="g2_compreensao" value="b" />A população rural cresceu mais rapidamente que a urbana entre 1950 e 1980.</label>
-        <label><input type="radio" name="g2_compreensao" value="c" />A população urbana e a rural permaneceram estáveis desde 1950.</label>
-        <label><input type="radio" name="g2_compreensao" value="d" />A população rural voltou a ser maior que a urbana após 2010.</label>
-      </div>
-      <button id="btn-g2-compreensao-ok">Confirmar</button>
-    </div>
-  </section>
-
-  <!-- Distração G2 -->
-  <section id="tela-grafico2-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 2">
-    <div class="conteudo">
-      <h2></h2>
-      <p>Digite 3 animais que comecem com a letra “C”:</p>
-      <input type="text" id="g2-distracao-input" placeholder="" aria-label="Digite aqui 3 animais com c" />
-      <p id="g2-distracao-erro" class="invalido" style="display:none;">Você precisa informar ao menos 3 palavras.</p>
-      <button id="btn-g2-distracao-fim">Prosseguir</button>
-    </div>
-  </section>
-
-  <section id="tela-grafico2-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 2">
-    <div class="conteudo">
-      <h2>Em 1950, qual era a situação da maior parte da população brasileira?</h2>
-      <div class="pergunta">
-        <label><input type="radio" name="g2_memoria" value="a" required />Urbana</label>
-        <label><input type="radio" name="g2_memoria" value="b" />Rural</label>
-      </div>
-      <button id="btn-g2-memoria-ok">Confirmar</button>
-    </div>
-  </section>
-
-
-
-  <!-- ===================== GRÁFICO 3 (WAFFLE) ===================== -->
-  <section id="tela-grafico3" class="tela" aria-label="Gráfico Waffle sobre meio de transporte">
-    <div class="conteudo">
-      <img id="grafico3-img" src="" alt="Gráfico Waffle" class="grafico" />
-      <div class="pergunta">
-        <p>O gráfico representa a divisão da população brasileira por sexo. Qual das opções abaixo corresponde corretamente aos dados apresentados?</p>
-        <label><input type="radio" name="g3_compreensao" value="a" required />A população masculina é ligeiramente maior que a feminina.</label>
-        <label><input type="radio" name="g3_compreensao" value="b" />Homens e mulheres têm participação igual na população total.</label>
-        <label><input type="radio" name="g3_compreensao" value="c" />Mulheres representam mais da metade da população.</label>
-        <label><input type="radio" name="g3_compreensao" value="d" />A população feminina é duas vezes maior que a masculina.</label>
-      </div>
-      <button id="btn-g3-compreensao-ok">Confirmar</button>
-    </div>
-  </section>
-
-  <!-- Distração G3 -->
-  <section id="tela-grafico3-distracao" class="tela" aria-label="Tarefa de distração do Gráfico 3">
-    <div class="conteudo">
-      <h2></h2>
-      <p>Digite 2 frutas que comecem com a letra “M”:</p>
-      <input type="text" id="g3-distracao-input" placeholder="" aria-label="Digite 2 frutas com M" />
-      <p id="g3-distracao-erro" class="invalido" style="display:none;">Você precisa informar ao menos 2 palavras.</p>
-      <button id="btn-g3-distracao-fim">Prosseguir</button>
-    </div>
-  </section>
-
-  <section id="tela-grafico3-memoria" class="tela" aria-label="Pergunta de Memória do Gráfico 3">
-    <div class="conteudo">
-      <h2>Qual a proporção aproximada entre mulheres e homens na população brasileira, conforme indicado no gráfico?</h2>
-      <div class="pergunta">
-        <label><input type="radio" name="g3_memoria" value="a" required />40% mulheres e 60% homens</label>
-        <label><input type="radio" name="g3_memoria" value="b" />50% mulheres e 50% homens</label>
-        <label><input type="radio" name="g3_memoria" value="c" />51% mulheres e 49% homens</label>
-        <label><input type="radio" name="g3_memoria" value="d" />61% mulheres e 39% homens</label>
-      </div>
-      <button id="btn-g3-memoria-ok">Confirmar</button>
-    </div>
-  </section>
-
-
-  <section id="tela-engajamento-final" class="tela" aria-label="Escala de Engajamento Geral">
-    <div class="conteudo">
-      <h2>As perguntas se referem a todos os gráficos vistos</h2>
-      <p>Selecione de 1 (discordo totalmente) a 5 (concordo totalmente) conforme sua opinião.</p>
-  <div class="pergunta">
-          <p>1) Os gráficos me deixaram curioso(a) para saber mais sobre o tema.</p>
-          <ul class="likert">
-            <li class="extremo">Discordo totalmente</li>
-            <li><input type="radio" name="final_e1" value="1" /></li>
-            <li><input type="radio" name="final_e1" value="2" /></li>
-            <li><input type="radio" name="final_e1" value="3" /></li>
-            <li><input type="radio" name="final_e1" value="4" /></li>
-            <li><input type="radio" name="final_e1" value="5" /></li>
-            <li class="extremo">Concordo totalmente</li>
-          </ul>
+  <div id="graficos-container">
+    <!-- Os 8 gráficos serão injetados via script.js -->
   </div>
 
-<div class="pergunta">
-        <p>2) Os gráficos despertaram meu interesse pelo assunto apresentado.</p>
-        <ul class="likert">
-          <li class="extremo">Discordo totalmente</li>
-          <li><input type="radio" name="final_e2" value="1" /></li>
-          <li><input type="radio" name="final_e2" value="2" /></li>
-          <li><input type="radio" name="final_e2" value="3" /></li>
-          <li><input type="radio" name="final_e2" value="4" /></li>
-          <li><input type="radio" name="final_e2" value="5" /></li>
-          <li class="extremo">Concordo totalmente</li>
-        </ul>
-      </div>
-
-      <div class="perguntat">
-        <p>3) Gostaria de ver mais visualizações como essa em outras situações.</p>
-        <ul class="likert">
-          <li class="extremo">Discordo totalmente</li>
-          <li><input type="radio" name="final_e3" value="1" /></li>
-          <li><input type="radio" name="final_e3" value="2" /></li>
-          <li><input type="radio" name="final_e3" value="3" /></li>
-          <li><input type="radio" name="final_e3" value="4" /></li>
-          <li><input type="radio" name="final_e3" value="5" /></li>
-          <li class="extremo">Concordo totalmente</li>
-        </ul>
-      </div>
-      <p id="final-engajamento-erro" class="invalido" style="display:none;">Preencha todos os sliders para continuar.</p>
-      <button id="btn-final-engajamento-ok">Finalizar</button>
+  <!-- ===================== TELA FINAL ===================== -->
+  <section id="tela-final" class="tela" aria-label="Tela Final">
+    <div class="conteudo">
+      <h2>Muito obrigado pela sua participação!</h2>
+      <p class="instrucoes">Seus dados foram registrados com sucesso.</p>
+      <form id="form-final">
+        <div class="pergunta-card">
+          <p>Caso tenha interesse no resultado da pesquisa, deixe seu e-mail para receber o relatório final.</p>
+          <p style="color: #64748b; font-size: 0.9em; margin-bottom: 15px;"><strong>Atenção:</strong> Este campo é totalmente <strong>OPCIONAL</strong>. Se não quiser, basta clicar em Finalizar e deixar o campo em branco.</p>
+          <input type="email" name="email" id="email-input" placeholder="seu.email@exemplo.com" class="input-moderno email-field" style="max-width: 100%; width: 300px;" />
+        </div>
+        <button type="button" id="btn-final-ok" class="btn-primary">Finalizar</button>
+      </form>
     </div>
   </section>
+
   </main> <!-- fim do main-content -->
 
-
+  <!-- MENU DE DEBUG PARA TESTES -->
+  <div id="debug-menu" aria-hidden="true">
+    <label for="debug-dropdown"><strong>Debug:</strong> Pular para tela</label>
+    <select id="debug-dropdown">
+      <option value="">Selecione...</option>
+    </select>
+  </div>
 </body>
 </html>
