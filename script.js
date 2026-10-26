@@ -308,11 +308,8 @@ function gerarTelasGraficos() {
     <section id="tela-grafico${num}" class="tela" aria-label="Gráfico ${num} - Compreensão">
       <div class="conteudo">
         <div class="grafico-header">
-          <h2>
-            <span>Gráfico ${num} de ${NUM_GRAFICOS}: ${dado.tema}</span>
-            <span class="badge-fase">Compreensão</span>
-          </h2>
-          <p class="instrucoes" style="margin-bottom: 10px;">Observe atentamente a visualização abaixo e responda à pergunta de compreensão:</p>
+          <h2>Gráfico ${num} de ${NUM_GRAFICOS}: ${dado.tema}</h2>
+          <p class="instrucoes" style="margin-bottom: 10px;">Observe atentamente a visualização abaixo e responda à pergunta:</p>
         </div>
 
         <div class="grafico-experimento-container">
@@ -320,12 +317,12 @@ function gerarTelasGraficos() {
         </div>
 
         <div class="pergunta-card">
-          <p><strong>Compreensão:</strong> ${dado.compreensao.pergunta}</p>
+          <p><strong>${dado.compreensao.pergunta}</strong></p>
           ${opcoesCompHtml}
         </div>
 
         <button type="button" id="btn-g${num}-comp-avancar" class="btn-primary btn-avancar-comp" data-id="${num}">
-          Confirmar e Avançar para Recordação
+          Avançar
         </button>
       </div>
     </section>
@@ -347,17 +344,14 @@ function gerarTelasGraficos() {
     <section id="tela-memoria${num}" class="tela" aria-label="Gráfico ${num} - Recordação e Avaliação">
       <div class="conteudo">
         <div class="grafico-header">
-          <h2>
-            <span>Gráfico ${num} de ${NUM_GRAFICOS}: ${dado.tema}</span>
-            <span class="badge-fase badge-memoria">Recordação & Avaliação</span>
-          </h2>
+          <h2>Gráfico ${num} de ${NUM_GRAFICOS}: ${dado.tema}</h2>
           <div class="instrucoes-memoria">
-            <strong>Atenção:</strong> Responda às questões abaixo de memória, com base no gráfico que você acabou de visualizar na tela anterior.
+            Responda às questões abaixo com base no gráfico que você acabou de visualizar na tela anterior.
           </div>
         </div>
 
         <div class="pergunta-card">
-          <p><strong>Recordação (Memória):</strong> ${dado.memoria.pergunta}</p>
+          <p><strong>${dado.memoria.pergunta}</strong></p>
           ${opcoesMemHtml}
         </div>
 
@@ -405,7 +399,7 @@ function gerarTelasGraficos() {
         </div>
 
         <button type="button" id="btn-g${num}-mem-avancar" class="btn-primary btn-avancar-mem" data-id="${num}">
-          ${num < NUM_GRAFICOS ? `Confirmar e Ir para o Gráfico ${num + 1} de ${NUM_GRAFICOS}` : 'Concluir Avaliação dos Gráficos'}
+          Avançar
         </button>
       </div>
     </section>
