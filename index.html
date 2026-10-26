@@ -28,9 +28,18 @@
       <p>Em nenhum momento você será julgado(a) como pessoa, e esta avaliação tem a finalidade única de pesquisa.</p>
       <p>Caso sinta algum desconforto, sinta-se livre para a qualquer momento interromper a realização do experimento.</p>
 
+      <div style="margin: 24px 0 10px 0;">
+        <label for="instituicao-select" style="font-weight: 600; margin-bottom: 8px; color: #1e293b;">Selecione seu contexto educacional / instituição:</label>
+        <select id="instituicao-select" class="input-moderno" style="max-width: 100%; width: 100%; height: 44px; font-size: 1rem; border-color: #cbd5e1; background: #ffffff;">
+          <option value="ESDI">Escola Superior de Desenho Industrial (ESDI / UERJ)</option>
+          <option value="ENCE">Escola Nacional de Ciências Estatísticas (ENCE / IBGE)</option>
+          <option value="OUTRO">Outro curso / instituição</option>
+        </select>
+      </div>
+
       <p class="pesquisador-info">Pesquisador responsável: Guilherme da Costa Garcia<br>
       Contato: ggarcia@esdi.uerj.br</p>
-      <button id="btn-iniciar" class="btn-primary">Iniciar</button>
+      <button id="btn-iniciar" class="btn-primary">Iniciar Experimento</button>
     </div>
   </section>
 
@@ -78,35 +87,47 @@
   <!-- ===================== TESTE MINI-VLAT PÁGINA 1 ===================== -->
   <section id="tela-minivlat-1" class="tela" aria-label="Teste Mini-VLAT 1">
     <div class="conteudo">
-      <h2>Parte 2 (1/4)</h2>
-      <!-- Título original: Letramento Visual Gráfico (Mini-VLAT) -->
-      <p class="instrucoes">Avalie os gráficos apresentados e responda às questões.</p>
+      <h2>Parte 2: Letramento Visual Gráfico (1/4)</h2>
+      <p class="instrucoes">
+        <strong>Instruções:</strong> Este teste mede sua capacidade de ler e interpretar gráficos.<br>
+        • O teste é composto por 12 questões no total.<br>
+        • Você receberá +1 ponto para cada resposta correta (não há penalidade por erro).<br>
+        • Se você não tiver certeza de alguma resposta, pode pular a questão.
+      </p>
       <form id="form-minivlat-1">
         
         <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q1]</em></div>
-          <p><strong>1.</strong> O eBay está aninhado (nested) na categoria Software.</p>
-          <label class="radio-label"><input type="radio" name="vlat1" value="Verdadeiro" required /> Verdadeiro</label>
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Treemap_Visitantes_Categorias_Sites.svg" alt="Treemap de Visitantes por Categorias de Sites" class="grafico-minivlat" />
+          </div>
+          <p><strong>1.</strong> O eBay está aninhado na categoria Software.</p>
+          <label class="radio-label"><input type="radio" name="vlat1" value="Verdadeiro" /> Verdadeiro</label>
           <label class="radio-label"><input type="radio" name="vlat1" value="Falso" /> Falso</label>
         </div>
+
         <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q2]</em></div>
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Barras_Empilhadas_100_Olimpiadas_Toquio.svg" alt="Desempenho nas Olimpíadas de Tóquio 2020" class="grafico-minivlat" />
+          </div>
           <p><strong>2.</strong> Qual país tem a menor proporção de medalhas de Ouro?</p>
-          <label class="radio-label"><input type="radio" name="vlat2" value="EUA" required /> EUA</label>
+          <label class="radio-label"><input type="radio" name="vlat2" value="EUA" /> EUA</label>
           <label class="radio-label"><input type="radio" name="vlat2" value="Grã-Bretanha" /> Grã-Bretanha</label>
           <label class="radio-label"><input type="radio" name="vlat2" value="Japão" /> Japão</label>
           <label class="radio-label"><input type="radio" name="vlat2" value="Austrália" /> Austrália</label>
         </div>
+
         <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q3]</em></div>
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Histograma_Distancia_Clientes.svg" alt="Distância da Viagem e Clientes" class="grafico-minivlat" />
+          </div>
           <p><strong>3.</strong> Qual foi a distância mais percorrida pelos clientes?</p>
-          <label class="radio-label"><input type="radio" name="vlat3" value="a" required /> 60 – 70 km</label>
-          <label class="radio-label"><input type="radio" name="vlat3" value="b" /> 30 – 40 km</label>
-          <label class="radio-label"><input type="radio" name="vlat3" value="c" /> 20 – 30 km</label>
-          <label class="radio-label"><input type="radio" name="vlat3" value="d" /> 50 – 60 km</label>
+          <label class="radio-label"><input type="radio" name="vlat3" value="60 – 70 km" /> 60 – 70 km</label>
+          <label class="radio-label"><input type="radio" name="vlat3" value="30 – 40 km" /> 30 – 40 km</label>
+          <label class="radio-label"><input type="radio" name="vlat3" value="20 – 30 km" /> 20 – 30 km</label>
+          <label class="radio-label"><input type="radio" name="vlat3" value="50 – 60 km" /> 50 – 60 km</label>
         </div>
 
-        <button type="submit" class="btn-primary">Avançar (2/4)</button>
+        <button type="submit" class="btn-primary">Avançar para Parte 2 (2/4)</button>
       </form>
     </div>
   </section>
@@ -114,35 +135,42 @@
   <!-- ===================== TESTE MINI-VLAT PÁGINA 2 ===================== -->
   <section id="tela-minivlat-2" class="tela" aria-label="Teste Mini-VLAT 2">
     <div class="conteudo">
-      <h2>Parte 2 (2/4)</h2>
-      <!-- Título original: Letramento Visual Gráfico (Mini-VLAT) -->
+      <h2>Parte 2: Letramento Visual Gráfico (2/4)</h2>
       <p class="instrucoes">Avalie os gráficos apresentados e responda às questões.</p>
       <form id="form-minivlat-2">
         
         <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q4]</em></div>
-          <p><strong>4.</strong> Em 2020, a taxa de desemprego de Washington (WA) foi maior do que a de Wisconsin (WI).</p>
-          <label class="radio-label"><input type="radio" name="vlat4" value="Verdadeiro" required /> Verdadeiro</label>
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Mapa_Coropletico_Brasil_IBGE_2020.svg" alt="Taxa de Desocupação por Estado em 2020" class="grafico-minivlat" />
+          </div>
+          <p><strong>4.</strong> Em 2020, a taxa de desemprego de São Paulo (SP) foi maior do que a do Rio Grande do Sul (RS).</p>
+          <label class="radio-label"><input type="radio" name="vlat4" value="Verdadeiro" /> Verdadeiro</label>
           <label class="radio-label"><input type="radio" name="vlat4" value="Falso" /> Falso</label>
         </div>
+
         <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q5]</em></div>
-          <p><strong>5.</strong> Qual é a fatia aproximada do mercado global de smartphones (market share) da Samsung?</p>
-          <label class="radio-label"><input type="radio" name="vlat5" value="a" required /> 17,6%</label>
-          <label class="radio-label"><input type="radio" name="vlat5" value="b" /> 25,3%</label>
-          <label class="radio-label"><input type="radio" name="vlat5" value="c" /> 10,9%</label>
-          <label class="radio-label"><input type="radio" name="vlat5" value="d" /> 35,2%</label>
-        </div>
-        <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q6]</em></div>
-          <p><strong>6.</strong> Qual cidade tem o maior número de estações de metrô?</p>
-          <label class="radio-label"><input type="radio" name="vlat6" value="a" required /> Pequim (Beijing)</label>
-          <label class="radio-label"><input type="radio" name="vlat6" value="b" /> Xangai (Shanghai)</label>
-          <label class="radio-label"><input type="radio" name="vlat6" value="c" /> Londres</label>
-          <label class="radio-label"><input type="radio" name="vlat6" value="d" /> Seul</label>
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Grafico_Pizza_Market_Share_Smartphones.svg" alt="Participação de Mercado Global de Smartphones em 2021" class="grafico-minivlat" />
+          </div>
+          <p><strong>5.</strong> Qual é a fatia aproximada do mercado global de smartphone da Samsung?</p>
+          <label class="radio-label"><input type="radio" name="vlat5" value="17,6%" /> 17,6%</label>
+          <label class="radio-label"><input type="radio" name="vlat5" value="25,3%" /> 25,3%</label>
+          <label class="radio-label"><input type="radio" name="vlat5" value="10,9%" /> 10,9%</label>
+          <label class="radio-label"><input type="radio" name="vlat5" value="35,2%" /> 35,2%</label>
         </div>
 
-        <button type="submit" class="btn-primary">Avançar (3/4)</button>
+        <div class="pergunta-card">
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Grafico_Bolhas_Sistemas_Metro.svg" alt="Sistemas de Metrô do Mundo" class="grafico-minivlat" />
+          </div>
+          <p><strong>6.</strong> Qual cidade tem o maior número de estações de metrô?</p>
+          <label class="radio-label"><input type="radio" name="vlat6" value="Pequim" /> Pequim</label>
+          <label class="radio-label"><input type="radio" name="vlat6" value="Xangai" /> Xangai</label>
+          <label class="radio-label"><input type="radio" name="vlat6" value="Londres" /> Londres</label>
+          <label class="radio-label"><input type="radio" name="vlat6" value="Seul" /> Seul</label>
+        </div>
+
+        <button type="submit" class="btn-primary">Avançar para Parte 2 (3/4)</button>
       </form>
     </div>
   </section>
@@ -150,37 +178,44 @@
   <!-- ===================== TESTE MINI-VLAT PÁGINA 3 ===================== -->
   <section id="tela-minivlat-3" class="tela" aria-label="Teste Mini-VLAT 3">
     <div class="conteudo">
-      <h2>Parte 2 (3/4)</h2>
-      <!-- Título original: Letramento Visual Gráfico (Mini-VLAT) -->
+      <h2>Parte 2: Letramento Visual Gráfico (3/4)</h2>
       <p class="instrucoes">Avalie os gráficos apresentados e responda às questões.</p>
       <form id="form-minivlat-3">
         
         <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q7]</em></div>
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Barras_Empilhadas_Servico_Quarto.svg" alt="Preços de Serviço de Quarto" class="grafico-minivlat" />
+          </div>
           <p><strong>7.</strong> Qual é o preço do amendoim em Seul?</p>
-          <label class="radio-label"><input type="radio" name="vlat7" value="a" required /> $5,2</label>
-          <label class="radio-label"><input type="radio" name="vlat7" value="b" /> $6,1</label>
-          <label class="radio-label"><input type="radio" name="vlat7" value="c" /> $7,5</label>
-          <label class="radio-label"><input type="radio" name="vlat7" value="d" /> $4,5</label>
-        </div>
-        <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q8]</em></div>
-          <p><strong>8.</strong> Qual foi o preço do barril de petróleo em fevereiro de 2020?</p>
-          <label class="radio-label"><input type="radio" name="vlat8" value="a" required /> $50,54</label>
-          <label class="radio-label"><input type="radio" name="vlat8" value="b" /> $47,02</label>
-          <label class="radio-label"><input type="radio" name="vlat8" value="c" /> $42,34</label>
-          <label class="radio-label"><input type="radio" name="vlat8" value="d" /> $43,48</label>
-        </div>
-        <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q9]</em></div>
-          <p><strong>9.</strong> Qual é a velocidade média da internet no Japão?</p>
-          <label class="radio-label"><input type="radio" name="vlat9" value="a" required /> 42,30 Mbps</label>
-          <label class="radio-label"><input type="radio" name="vlat9" value="b" /> 40,51 Mbps</label>
-          <label class="radio-label"><input type="radio" name="vlat9" value="c" /> 35,25 Mbps</label>
-          <label class="radio-label"><input type="radio" name="vlat9" value="d" /> 16,16 Mbps</label>
+          <label class="radio-label"><input type="radio" name="vlat7" value="$5,2" /> $5,2</label>
+          <label class="radio-label"><input type="radio" name="vlat7" value="$6,1" /> $6,1</label>
+          <label class="radio-label"><input type="radio" name="vlat7" value="$7,5" /> $7,5</label>
+          <label class="radio-label"><input type="radio" name="vlat7" value="$4,5" /> $4,5</label>
         </div>
 
-        <button type="submit" class="btn-primary">Avançar (4/4)</button>
+        <div class="pergunta-card">
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Grafico_Linha_Preco_Petroleo.svg" alt="Preço do Petróleo em 2020" class="grafico-minivlat" />
+          </div>
+          <p><strong>8.</strong> Qual foi o preço do barril de petróleo em fevereiro de 2020?</p>
+          <label class="radio-label"><input type="radio" name="vlat8" value="$50,54" /> $50,54</label>
+          <label class="radio-label"><input type="radio" name="vlat8" value="$47,02" /> $47,02</label>
+          <label class="radio-label"><input type="radio" name="vlat8" value="$42,34" /> $42,34</label>
+          <label class="radio-label"><input type="radio" name="vlat8" value="$43,48" /> $43,48</label>
+        </div>
+
+        <div class="pergunta-card">
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Grafico_Barras_Velocidade_Internet.svg" alt="Velocidade Global da Internet em 2021" class="grafico-minivlat" />
+          </div>
+          <p><strong>9.</strong> Qual é a velocidade média da internet no Japão?</p>
+          <label class="radio-label"><input type="radio" name="vlat9" value="42,30 Mbps" /> 42,30 Mbps</label>
+          <label class="radio-label"><input type="radio" name="vlat9" value="40,51 Mbps" /> 40,51 Mbps</label>
+          <label class="radio-label"><input type="radio" name="vlat9" value="35,25 Mbps" /> 35,25 Mbps</label>
+          <label class="radio-label"><input type="radio" name="vlat9" value="16,16 Mbps" /> 16,16 Mbps</label>
+        </div>
+
+        <button type="submit" class="btn-primary">Avançar para Parte 2 (4/4)</button>
       </form>
     </div>
   </section>
@@ -188,32 +223,39 @@
   <!-- ===================== TESTE MINI-VLAT PÁGINA 4 ===================== -->
   <section id="tela-minivlat-4" class="tela" aria-label="Teste Mini-VLAT 4">
     <div class="conteudo">
-      <h2>Parte 2 (4/4)</h2>
-      <!-- Título original: Letramento Visual Gráfico (Mini-VLAT) -->
+      <h2>Parte 2: Letramento Visual Gráfico (4/4)</h2>
       <p class="instrucoes">Avalie os gráficos apresentados e responda às questões.</p>
       <form id="form-minivlat-4">
         
         <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q10]</em></div>
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Grafico_Area_Preco_Cafe.svg" alt="Preço do Café Robusta" class="grafico-minivlat" />
+          </div>
           <p><strong>10.</strong> Qual foi o preço médio de uma libra de café em outubro de 2019?</p>
-          <label class="radio-label"><input type="radio" name="vlat10" value="a" required /> $0,71</label>
-          <label class="radio-label"><input type="radio" name="vlat10" value="b" /> $0,90</label>
-          <label class="radio-label"><input type="radio" name="vlat10" value="c" /> $0,80</label>
-          <label class="radio-label"><input type="radio" name="vlat10" value="d" /> $0,63</label>
+          <label class="radio-label"><input type="radio" name="vlat10" value="$0,71" /> $0,71</label>
+          <label class="radio-label"><input type="radio" name="vlat10" value="$0,90" /> $0,90</label>
+          <label class="radio-label"><input type="radio" name="vlat10" value="$0,80" /> $0,80</label>
+          <label class="radio-label"><input type="radio" name="vlat10" value="$0,63" /> $0,63</label>
         </div>
+
         <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q11]</em></div>
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Area_Empilhada_Nomes_Reino_Unido.svg" alt="Nomes Femininos Populares no Reino Unido" class="grafico-minivlat" />
+          </div>
           <p><strong>11.</strong> Qual foi a razão entre meninas chamadas "Isla" e meninas chamadas "Amelia" em 2012 no Reino Unido?</p>
-          <label class="radio-label"><input type="radio" name="vlat11" value="a" required /> 1 para 1</label>
-          <label class="radio-label"><input type="radio" name="vlat11" value="b" /> 1 para 2</label>
-          <label class="radio-label"><input type="radio" name="vlat11" value="c" /> 1 para 3</label>
-          <label class="radio-label"><input type="radio" name="vlat11" value="d" /> 1 para 4</label>
+          <label class="radio-label"><input type="radio" name="vlat11" value="1 para 1" /> 1 para 1</label>
+          <label class="radio-label"><input type="radio" name="vlat11" value="1 para 2" /> 1 para 2</label>
+          <label class="radio-label"><input type="radio" name="vlat11" value="1 para 3" /> 1 para 3</label>
+          <label class="radio-label"><input type="radio" name="vlat11" value="1 para 4" /> 1 para 4</label>
         </div>
+
         <div class="pergunta-card">
-          <div class="placeholder-grafico-pequeno"><em>[Placeholder Gráfico Q12]</em></div>
-            <p><strong>12.</strong> Existe uma relação negativa entre a altura e o peso dos 85 homens.</p>
-            <label class="radio-label"><input type="radio" name="vlat12" value="Verdadeiro" required /> Verdadeiro</label>
-            <label class="radio-label"><input type="radio" name="vlat12" value="Falso" /> Falso</label>
+          <div class="grafico-minivlat-container">
+            <img src="assets/minivlat/Grafico_Dispersao_Altura_Peso.svg" alt="Altura e Peso de 85 Indivíduos" class="grafico-minivlat" />
+          </div>
+          <p><strong>12.</strong> Existe uma relação negativa entre a altura e o peso dos 85 homens.</p>
+          <label class="radio-label"><input type="radio" name="vlat12" value="Verdadeiro" /> Verdadeiro</label>
+          <label class="radio-label"><input type="radio" name="vlat12" value="Falso" /> Falso</label>
         </div>
 
         <button type="submit" class="btn-primary">Enviar Respostas Mini-VLAT</button>
@@ -225,8 +267,17 @@
   <section id="tela-transicao" class="tela" aria-label="Tela de transição">
     <div class="conteudo">
       <h2>Instruções da Fase Principal</h2>
-      <p class="instrucoes">Você concluiu a etapa inicial de letramento. A partir de agora, você será exposto(a) a uma série de gráficos baseados em dados do Censo Demográfico 2022.<br><br>Para cada gráfico, pedimos que você responda a uma pergunta de compreensão e avalie sua experiência (engajamento, curiosidade e interesse) utilizando a escala apresentada.</p>
-      <button id="btn-avancar-transicao" class="btn-primary">Avançar para os Gráficos</button>
+      <p class="instrucoes">Você concluiu a etapa inicial de letramento. A partir de agora, você será exposto(a) a uma série de <strong>8 gráficos</strong> elaborados a partir de dados reais do Censo Demográfico 2022.</p>
+      
+      <div class="pergunta-card" style="background: #ffffff; border-left: 4px solid #2563eb;">
+        <p style="margin-bottom: 8px;"><strong>Como funcionará esta etapa:</strong></p>
+        <ul style="margin-left: 20px; line-height: 1.7; color: #334155;">
+          <li><strong>1. Gráfico e Compreensão:</strong> Você verá o gráfico e responderá a uma questão de compreensão da informação visualizada.</li>
+          <li><strong>2. Recordação e Avaliação:</strong> Ao avançar, em uma tela seguinte sem o gráfico, você responderá a uma pergunta de memória sobre os dados que acabou de ver e avaliará seu engajamento com aquela visualização.</li>
+        </ul>
+      </div>
+
+      <button id="btn-avancar-transicao" class="btn-primary">Iniciar Fase de Gráficos</button>
     </div>
   </section>
 
@@ -239,6 +290,10 @@
     <div class="conteudo">
       <h2>Muito obrigado pela sua participação!</h2>
       <p class="instrucoes">Seus dados foram registrados com sucesso.</p>
+      <div style="margin-bottom: 20px;">
+        <span style="color: #64748b; font-size: 0.95rem;">Código anônimo do participante:</span><br>
+        <span id="id-participante-display" class="id-badge">---</span>
+      </div>
       <form id="form-final">
         <div class="pergunta-card">
           <p>Caso tenha interesse no resultado da pesquisa, deixe seu e-mail para receber o relatório final.</p>
