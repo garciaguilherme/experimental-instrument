@@ -1,6 +1,6 @@
 # Instrumento Experimental: Ícones em Visualização de Dados e Letramento
 
-Instrumento web interativo desenvolvido para a pesquisa de mestrado de **Guilherme da Costa Garcia** (ESDI/UERJ), investigando o impacto do uso de **ícones (isótipos)** em gráficos estatísticos sobre a **compreensão**, a **recordação (memória)** e o **engajamento** do público, considerando diferentes níveis de **letramento visual gráfico** e **numeracia**.
+Instrumento web interativo desenvolvido para a pesquisa de mestrado de **Guilherme da Costa Garcia** (ESDI/UERJ), investigando o impacto do uso de **ícones** em gráficos estatísticos sobre a **compreensão**, a **memória** e o **engajamento** do público, considerando diferentes níveis de **letramento visual gráfico** e **numeracia**.
 
 ---
 
