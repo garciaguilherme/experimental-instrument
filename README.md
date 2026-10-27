@@ -20,7 +20,7 @@ O experimento é composto por 5 etapas sequenciais:
 
 1. **Identificação e Consentimento (TCLE)**:
    - Apresentação dos objetivos e concordância livre e esclarecida.
-   - Coleta de instituição de origem (ESDI, ENCE ou Outro) e geração do código único do participante.
+   - Coleta de instituição de origem (ESDI ou ENCE) e geração do código único do participante.
 
 2. **Numeracia Subjetiva (SNS)**:
    - 4 questões quantitativas e probabilísticas adaptadas para estimar a habilidade numérica do respondente.
@@ -50,7 +50,6 @@ Todos os dados coletados passam por cálculos automáticos consolidados antes da
 - **Fórmula**: `PREFIXO` + `Número Aleatório (100 a 999)`
   - ESDI/UERJ: `ESDI###`
   - ENCE/IBGE: `ENCE###`
-  - Outra: `EXP###`
 
 ### 2. Tempo Total de Execução
 - Medido em segundos desde o início da primeira tela até a conclusão:
