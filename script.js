@@ -690,8 +690,20 @@ window.addEventListener('DOMContentLoaded', () => {
   // Gerar telas dos gráficos
   gerarTelasGraficos();
 
-  // Iniciar na primeira tela
-  mostrarTela('tela-inicial');
+  // Iniciar na tela especificada na URL (ou na primeira tela)
+  const urlParams = new URLSearchParams(window.location.search);
+  const telaParam = urlParams.get('tela') || window.location.hash.replace('#', '');
+  if (telaParam && document.getElementById(telaParam)) {
+    mostrarTela(telaParam);
+  } else {
+    mostrarTela('tela-inicial');
+  }
+
+  // Ocultar menu de debug se solicitado por parâmetro (ex: para capturas limpas)
+  if (urlParams.get('nodebug') === '1') {
+    const debugMenu = document.getElementById('debug-menu');
+    if (debugMenu) debugMenu.style.display = 'none';
+  }
 
   // BOTÃO INICIAR EXPERIMENTO
   document.getElementById('btn-iniciar').addEventListener('click', () => {
