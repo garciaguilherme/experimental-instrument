@@ -18,21 +18,21 @@ Avaliar experimentalmente se a incorporação de recursos visuais figurativos (�
 
 O experimento é composto por 5 etapas sequenciais:
 
-1. **Identificação e Consentimento (TCLE)**:
-   - Apresentação dos objetivos e concordância livre e esclarecida.
-   - Coleta de instituição de origem (ESDI ou ENCE) e geração do código único do participante.
+1. **Identificação e Consentimento**:
+   - Apresentação dos objetivos.
+   - Coleta de instituição de origem (ESDI ou ENCE).
 
-2. **Numeracia Subjetiva (SNS)**:
-   - 4 questões quantitativas e probabilísticas adaptadas para estimar a habilidade numérica do respondente.
+2. **Berlin Numeracy Test**:
+   - 4 questões adaptadas para estimar a habilidade numérica do respondente.
 
 3. **Mini-VLAT (Visualization Literacy Assessment Test)**:
-   - 12 questões objetivas com gráficos em SVG (barras, linhas, setores, dispersão, área empilhada, bolhas, cloroplético, treemap, etc.) para mensurar a proficiência em leitura gráfica.
+   - 12 questões objetivas com gráficos para mensurar a proficiência em leitura gráfica.
 
 4. **Transição e Instruções**:
    - Orientação sobre a dinâmica de apresentação dos gráficos do experimento.
 
-5. **Experimento Principal (Censo 2022)**:
-   - **Delineamento intra-sujeito (within-subjects)**: 8 tópicos estatísticos, balanceados aleatoriamente para cada participante em **4 gráficos com ícones** e **4 gráficos sem ícones** (controle).
+5. **Experimento Principal**:
+   - **Delineamento intra-sujeito**: 8 tópicos estatísticos, balanceados aleatoriamente para cada participante em **4 gráficos com ícones** e **4 gráficos sem ícones**.
    - Para cada gráfico, há duas telas consecutivas:
      - **Tela A (Compreensão)**: Visualização do gráfico com 1 pergunta de leitura direta.
      - **Tela B (Recordação e Engajamento)**: Gráfico ocultado; 1 pergunta de memória sobre o dado visualizado + 3 itens em escala Likert (1 a 5) avaliando clareza, interesse e atratividade.
@@ -57,32 +57,19 @@ Todos os dados coletados passam por cálculos automáticos consolidados antes da
   tempo_total_segundos = round((timestamp_fim - timestamp_inicio) / 1000)
   ```
 
-### 3. Acurácia de Numeracia (Escala de 0 a 4)
-- Comparação das respostas com os gabaritos matemáticos:
-  - **Item 1**: `(3/5) * 50 = 30`
-  - **Item 2**: `100 / 400 = 25%`
-  - **Item 3**: `(2/7) * 70 = 20`
-  - **Item 4**: `0,04 / (0,04 + 0,04) = 50%`
-- Pontuação total: `acertos_numeracia` (escore de 0 a 4).
-
-### 4. Acurácia no Mini-VLAT (Escala de 0 a 12)
-- Cada uma das 12 questões possui uma resposta correta unívoca pré-definida.
-- Pontuação total: `acertos_vlat` (soma de 0 a 12 acertos).
-- Proporção percentual: `(acertos_vlat / 12) * 100%`.
-
-### 5. Sorteio e Alocação Intra-Sujeito
+### 3. Sorteio e Alocação Intra-Sujeito
 - Utiliza o algoritmo Fisher-Yates para embaralhar os 8 índices de tópicos e selecionar exatamente 4 tópicos para a condição **com ícones** (`com_icones`) e 4 para a condição **sem ícones** (`sem_icones`), garantindo neutralidade e balanceamento estatístico intra-sujeito.
 
-### 6. Desempenho no Experimento Principal
+### 4. Desempenho no Experimento Principal
 
 | Métrica | Descrição | Escala |
 | :--- | :--- | :---: |
-| `comp_com_icones_acertos` | Total de acertos em compreensão nos 4 gráficos com ícones | 0 a 4 |
-| `comp_sem_icones_acertos` | Total de acertos em compreensão nos 4 gráficos sem ícones | 0 a 4 |
-| `mem_com_icones_acertos` | Total de acertos em recordação (memória) nos 4 gráficos com ícones | 0 a 4 |
-| `mem_sem_icones_acertos` | Total de acertos em recordação (memória) nos 4 gráficos sem ícones | 0 a 4 |
+| `comp_com_icones_acertos` | Total de acertos em compreensão nos 4 gráficos com ícones 
+| `comp_sem_icones_acertos` | Total de acertos em compreensão nos 4 gráficos sem ícones
+| `mem_com_icones_acertos` | Total de acertos em recordação (memória) nos 4 gráficos com ícones
+| `mem_sem_icones_acertos` | Total de acertos em recordação (memória) nos 4 gráficos sem ícones
 
-### 7. Índices de Engajamento Subjetivo (Escala Likert de 1 a 5)
+### 5. Índices de Engajamento Subjetivo (Escala Likert de 1 a 5)
 Para cada gráfico, o engajamento individual é a média das 3 dimensões (clareza, interesse visual e interesse em ver mais):
 ```text
 engajamento_topico = (item_1 + item_2 + item_3) / 3
@@ -102,8 +89,8 @@ A partir disso, o sistema computa os índices médios consolidados para cada con
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Frontend**: HTML5 semântico, Vanilla CSS (Design responsivo, tipografia Inter, dark/light accents) e JavaScript moderno (ES6+).
-- **Vetores e Gráficos**: SVGs originais do Mini-VLAT e PNGs em alta definição dos gráficos do Censo 2022.
+- **Frontend**: HTML5 semântico, Vanilla CSS e JavaScript (ES6+).
+- **Vetores e Gráficos**: SVGs adaptados do Mini-VLAT e PNGs dos gráficos do Censo 2022.
 - **Armazenamento e Persistência**:
   - `localStorage` para tolerância a falhas e recuperação de sessão.
   - Exportação client-side de arquivo `JSON`.
