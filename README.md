@@ -53,20 +53,22 @@ Todos os dados coletados passam por cálculos automáticos consolidados antes da
 
 ### 2. Tempo Total de Execução
 - Medido em segundos desde o início da primeira tela até a conclusão:
-  $$\text{tempo\_total\_segundos} = \text{round}\left(\frac{\text{timestamp\_fim} - \text{timestamp\_inicio}}{1000}\right)$$
+  ```text
+  tempo_total_segundos = round((timestamp_fim - timestamp_inicio) / 1000)
+  ```
 
 ### 3. Acurácia de Numeracia (Escala de 0 a 4)
 - Comparação das respostas com os gabaritos matemáticos:
-  - **Item 1**: $3/5 \times 50 = \mathbf{30}$
-  - **Item 2**: $100 / 400 = \mathbf{25\%}$
-  - **Item 3**: $2/7 \times 70 = \mathbf{20}$
-  - **Item 4**: $0{,}04 / (0{,}04 + 0{,}04) = \mathbf{50\%}$
-- $\text{acertos\_numeracia} \in [0, 4]$.
+  - **Item 1**: `(3/5) * 50 = 30`
+  - **Item 2**: `100 / 400 = 25%`
+  - **Item 3**: `(2/7) * 70 = 20`
+  - **Item 4**: `0,04 / (0,04 + 0,04) = 50%`
+- Pontuação total: `acertos_numeracia` (escore de 0 a 4).
 
 ### 4. Acurácia no Mini-VLAT (Escala de 0 a 12)
 - Cada uma das 12 questões possui uma resposta correta unívoca pré-definida.
-- $\text{acertos\_vlat} = \sum_{i=1}^{12} [respostas.vlat_i == gabarito_i]$ (escore de 0 a 12).
-- Proporção percentual: $\frac{\text{acertos\_vlat}}{12} \times 100\%$.
+- Pontuação total: `acertos_vlat` (soma de 0 a 12 acertos).
+- Proporção percentual: `(acertos_vlat / 12) * 100%`.
 
 ### 5. Sorteio e Alocação Intra-Sujeito
 - Utiliza o algoritmo Fisher-Yates para embaralhar os 8 índices de tópicos e selecionar exatamente 4 tópicos para a condição **com ícones** (`com_icones`) e 4 para a condição **sem ícones** (`sem_icones`), garantindo neutralidade e balanceamento estatístico intra-sujeito.
@@ -81,14 +83,20 @@ Todos os dados coletados passam por cálculos automáticos consolidados antes da
 | `mem_sem_icones_acertos` | Total de acertos em recordação (memória) nos 4 gráficos sem ícones | 0 a 4 |
 
 ### 7. Índices de Engajamento Subjetivo (Escala Likert de 1 a 5)
-Para cada gráfico $j \in \{1, \dots, 8\}$, o engajamento individual é a média das 3 dimensões (clareza, interesse visual, interesse em ver mais):
-$$\text{Engajamento}_j = \frac{\text{Item}_1 + \text{Item}_2 + \text{Item}_3}{3}$$
+Para cada gráfico, o engajamento individual é a média das 3 dimensões (clareza, interesse visual e interesse em ver mais):
+```text
+engajamento_topico = (item_1 + item_2 + item_3) / 3
+```
 
 A partir disso, o sistema computa os índices médios consolidados para cada condição experimental:
 - **Engajamento Médio com Ícones**:
-  $$\text{engajamento\_medio\_com\_icones} = \frac{1}{4} \sum_{j \in \text{com\_icones}} \text{Engajamento}_j$$
+  ```text
+  engajamento_medio_com_icones = média dos 4 tópicos com ícones
+  ```
 - **Engajamento Médio sem Ícones**:
-  $$\text{engajamento\_medio\_sem\_icones} = \frac{1}{4} \sum_{k \in \text{sem\_icones}} \text{Engajamento}_k$$
+  ```text
+  engajamento_medio_sem_icones = média dos 4 tópicos sem ícones
+  ```
 
 ---
 
