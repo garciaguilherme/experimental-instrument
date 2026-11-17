@@ -320,6 +320,27 @@ test('Normalização de registro: recalcula Mini-VLAT antigo a partir de json_co
   assert.strictEqual(norm.vlat_recalculado, true);
 });
 
+test('Normalização de registro: aceita decimais com vírgula vindos do Google Sheets (PT-BR)', () => {
+  const rowPtBr = {
+    id_participante: 'ESDI801',
+    instituicao: 'ESDI',
+    tempo_segundos: '310',
+    acertos_numeracia: '2',
+    acertos_vlat: '7,67',
+    comp_icones: '4',
+    comp_sem_icones: '3',
+    mem_icones: '3',
+    mem_sem_icones: '2',
+    engajamento_icones: '4,67',
+    engajamento_sem_icones: '2,75'
+  };
+
+  const norm = stats.normalizarRegistro(rowPtBr);
+  assert.strictEqual(norm.acertos_vlat, 7.67);
+  assert.strictEqual(norm.engajamento_icones, 4.67);
+  assert.strictEqual(norm.engajamento_sem_icones, 2.75);
+});
+
 // -------------------------
 // Executor
 // -------------------------

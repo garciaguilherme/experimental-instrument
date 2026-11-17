@@ -406,7 +406,10 @@
 
   function toNumOrNull(val) {
     if (val === null || val === undefined || val === '') return null;
-    const n = Number(val);
+    if (typeof val === 'number') return Number.isFinite(val) ? val : null;
+    const texto = String(val).trim().replace(',', '.');
+    if (!texto) return null;
+    const n = Number(texto);
     return Number.isFinite(n) ? n : null;
   }
 
