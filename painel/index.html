@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel de Resultados — Experimento de Visualização</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="painel.css" />
+  <script src="stats.js" defer></script>
+  <script src="painel.js" defer></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-title">
+        <h1>Painel de Análise do Experimento</h1>
+        <p>Estatística descritiva, testes <em>t</em> e checagem automática das pontuações</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" id="btn-sair" class="btn-secondary" hidden>Bloquear painel</button>
+        <a href="../index.html" class="nav-back">Voltar ao experimento</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container">
+    <section id="auth-gate" class="auth-gate" aria-labelledby="auth-title">
+      <div class="auth-card">
+        <h2 id="auth-title">Acesso Restrito ao Painel</h2>
+        <p class="section-desc">Digite a senha de pesquisa para visualizar os resultados e análises estatísticas.</p>
+        <form id="form-auth" novalidate>
+          <div class="auth-field">
+            <label for="input-senha">Senha de acesso</label>
+            <div class="password-row">
+              <input type="password" id="input-senha" class="control-input" autocomplete="current-password" required />
+              <button type="button" id="btn-toggle-senha" class="btn-secondary" aria-pressed="false" aria-controls="input-senha">Mostrar</button>
+            </div>
+          </div>
+          <div id="auth-erro" class="status-banner is-error" role="alert" aria-live="assertive" hidden></div>
+          <button type="submit" class="btn-primary auth-submit">Entrar no painel</button>
+        </form>
+      </div>
+    </section>
+
+    <div id="painel-conteudo" hidden>
+    <nav class="toolbar" aria-label="Controles de dados e filtros">
+      <div class="toolbar-group">
+        <label for="filtro-instituicao">Instituição:</label>
+        <select id="filtro-instituicao" class="control-select">
+          <option value="TODAS">Todas</option>
+          <option value="ESDI">ESDI / UERJ</option>
+          <option value="ENCE">ENCE / IBGE</option>
+        </select>
+      </div>
+
+      <div class="toolbar-group">
+        <button type="button" id="btn-atualizar" class="btn-primary">Atualizar do SheetDB</button>
+        <label for="input-json" class="file-label">
+          Importar JSON(s)
+          <input type="file" id="input-json" accept=".json,application/json" multiple class="sr-only" />
+        </label>
+        <button type="button" id="btn-exemplo" class="btn-secondary">Carregar dados de exemplo</button>
+      </div>
+    </nav>
+
+    <div id="status-banner" class="status-banner" role="status" aria-live="polite">
+      Carregando dados do SheetDB...
+    </div>
+
+    <!-- KPIs -->
+    <section aria-labelledby="titulo-kpis" class="kpi-grid">
+      <h2 id="titulo-kpis" class="sr-only">Resumo da amostra</h2>
+      <div class="kpi-card">
+        <div class="kpi-label">Participantes (N)</div>
+        <div class="kpi-value" id="kpi-n">0</div>
+        <div class="kpi-sub" id="kpi-dist">ESDI: 0 | ENCE: 0</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Numeracia (Média / 4)</div>
+        <div class="kpi-value" id="kpi-num">—</div>
+        <div class="kpi-sub">Berlin Numeracy Test</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Mini-VLAT (Média)</div>
+        <div class="kpi-value" id="kpi-vlat">—</div>
+        <div class="kpi-sub">Escore corrigido (-6 a 12)</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Tempo Médio</div>
+        <div class="kpi-value" id="kpi-tempo">—</div>
+        <div class="kpi-sub">Duração do experimento</div>
+      </div>
+    </section>
+
+    <!-- 1. ANÁLISE DESCRITIVA BÁSICA -->
+    <section class="panel-section" aria-labelledby="titulo-descritiva">
+      <h2 id="titulo-descritiva">1. Análise Descritiva Básica</h2>
+      <p class="section-desc">
+        Medidas resumo para a amostra filtrada atual (média, desvio padrão amostral, mediana, mínimo e máximo).
+        Registros com <code>json_completo</code> têm o Mini-VLAT automaticamente padronizado pela fórmula oficial.
+      </p>
+      <div class="table-wrapper">
+        <table>
+          <caption>Estatísticas descritivas por variável do experimento</caption>
+          <thead>
+            <tr>
+              <th scope="col">Variável</th>
+              <th scope="col">Escala</th>
+              <th scope="col" class="num-col">N</th>
+              <th scope="col" class="num-col">Média</th>
+              <th scope="col" class="num-col">DP</th>
+              <th scope="col" class="num-col">Mediana</th>
+              <th scope="col" class="num-col">Mín</th>
+              <th scope="col" class="num-col">Máx</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-descritiva"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. TESTE T PAREADO (VARIÁVEIS GRÁFICAS) -->
+    <section class="panel-section" aria-labelledby="titulo-t-pareado">
+      <h2 id="titulo-t-pareado">2. Teste <em>t</em> Pareado — Variáveis Gráficas (Com Ícones vs. Sem Ícones)</h2>
+      <p class="section-desc">
+        Comparação intra-sujeito (α = 0,05, bilateral) avaliando o efeito da presença de ícones em Compreensão, Recordação/Memória e Engajamento.
+      </p>
+      <div class="table-wrapper">
+        <table>
+          <caption>Resultados do teste t pareado para cada variável gráfica</caption>
+          <thead>
+            <tr>
+              <th scope="col">Variável Gráfica</th>
+              <th scope="col" class="num-col">N pares</th>
+              <th scope="col" class="num-col">Média Com Ícones</th>
+              <th scope="col" class="num-col">Média Sem Ícones</th>
+              <th scope="col" class="num-col">Dif. Média (Δ)</th>
+              <th scope="col" class="num-col">t</th>
+              <th scope="col" class="num-col">gl</th>
+              <th scope="col" class="num-col">p-valor</th>
+              <th scope="col" class="num-col">d de Cohen</th>
+              <th scope="col">Conclusão</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-t-pareado"></tbody>
+        </table>
+      </div>
+
+      <div id="graficos-comparativos" class="charts-grid" aria-label="Comparação visual das médias com e sem ícones"></div>
+    </section>
+
+    <!-- 3. TESTE T ENTRE INSTITUIÇÕES E REFERÊNCIA -->
+    <section class="panel-section" aria-labelledby="titulo-t-grupos">
+      <h2 id="titulo-t-grupos">3. Testes <em>t</em> — Numeracia, Mini-VLAT e Comparação entre Instituições (ESDI vs. ENCE)</h2>
+      <p class="section-desc">
+        Teste <em>t</em> de Welch para amostras independentes comparando ESDI e ENCE em todas as variáveis, além de testes <em>t</em> de uma amostra para Numeracia (vs. 2,0) e Mini-VLAT (vs. 0).
+      </p>
+
+      <div class="table-wrapper" style="margin-bottom: 1.5rem;">
+        <table>
+          <caption>Teste t de uma amostra para Numeracia e Mini-VLAT (amostra atual)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Variável</th>
+              <th scope="col" class="num-col">Valor de Ref. (μ₀)</th>
+              <th scope="col" class="num-col">N</th>
+              <th scope="col" class="num-col">Média</th>
+              <th scope="col" class="num-col">DP</th>
+              <th scope="col" class="num-col">t</th>
+              <th scope="col" class="num-col">gl</th>
+              <th scope="col" class="num-col">p-valor</th>
+              <th scope="col" class="num-col">d de Cohen</th>
+              <th scope="col">Conclusão</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-t-uma-amostra"></tbody>
+        </table>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <caption>Teste t de Welch (ESDI vs. ENCE) para Numeracia, Mini-VLAT e variáveis gráficas</caption>
+          <thead>
+            <tr>
+              <th scope="col">Variável</th>
+              <th scope="col" class="num-col">N ESDI</th>
+              <th scope="col" class="num-col">Média ESDI</th>
+              <th scope="col" class="num-col">N ENCE</th>
+              <th scope="col" class="num-col">Média ENCE</th>
+              <th scope="col" class="num-col">t</th>
+              <th scope="col" class="num-col">gl</th>
+              <th scope="col" class="num-col">p-valor</th>
+              <th scope="col" class="num-col">d de Cohen</th>
+              <th scope="col">Conclusão</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-t-instituicoes"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 4. CHECAGEM AUTOMÁTICA DOS CÁLCULOS -->
+    <section class="panel-section" aria-labelledby="titulo-auditoria">
+      <h2 id="titulo-auditoria">4. Checagem Automática dos Cálculos</h2>
+      <p class="section-desc">
+        Verificação em tempo real das fórmulas de pontuação (Numeracia, Mini-VLAT com penalidade de chute, variáveis gráficas) e dos cálculos estatísticos (descritiva e testes <em>t</em>).
+      </p>
+      <button type="button" id="btn-auditoria" class="btn-secondary">Executar checagem dos cálculos</button>
+      <div id="auditoria-resumo" class="status-banner" style="margin-top: 1rem;" role="status" aria-live="polite">
+        Clique no botão acima para executar a verificação.
+      </div>
+      <ul id="auditoria-lista" class="audit-list"></ul>
+    </section>
+
+    <!-- 5. TABELA DE PARTICIPANTES -->
+    <section class="panel-section" aria-labelledby="titulo-participantes">
+      <h2 id="titulo-participantes">5. Registros Individuais</h2>
+      <p class="section-desc">Lista dos participantes incluídos na análise atual.</p>
+      <div class="table-wrapper">
+        <table>
+          <caption>Pontuações individuais por participante</caption>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Instituição</th>
+              <th scope="col" class="num-col">Tempo (s)</th>
+              <th scope="col" class="num-col">Numeracia</th>
+              <th scope="col" class="num-col">Mini-VLAT</th>
+              <th scope="col" class="num-col">Comp. Ícones</th>
+              <th scope="col" class="num-col">Comp. Sem</th>
+              <th scope="col" class="num-col">Mem. Ícones</th>
+              <th scope="col" class="num-col">Mem. Sem</th>
+              <th scope="col" class="num-col">Eng. Ícones</th>
+              <th scope="col" class="num-col">Eng. Sem</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-participantes"></tbody>
+        </table>
+      </div>
+    </section>
+    </div>
+  </main>
+</body>
+</html>

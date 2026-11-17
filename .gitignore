@@ -1,0 +1,23 @@
+# Dados de respostas individuais e backups exportados do experimento
+experimento_*.json
+respostas_*.json
+ESDI*.json
+ENCE*.json
+
+# Planilhas e exportações de dados coletados (Google Sheets / SheetDB)
+*.csv
+*.tsv
+*.xlsx
+*.xls
+
+# Pastas locais de dados/backups
+dados/
+respostas/
+data/
+exports/
+
+# Variáveis de ambiente e arquivos de sistema
+.env
+.env.*
+.DS_Store
+Thumbs.db

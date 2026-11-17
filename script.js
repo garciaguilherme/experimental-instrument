@@ -32,6 +32,22 @@ const GABARITO_VLAT = {
   vlat12: "Falso"
 };
 
+// Número de alternativas por questão do Mini-VLAT (para correção de chute: R - W / (C - 1))
+const OPCOES_VLAT = {
+  vlat1: 2,
+  vlat2: 4,
+  vlat3: 4,
+  vlat4: 2,
+  vlat5: 4,
+  vlat6: 4,
+  vlat7: 4,
+  vlat8: 4,
+  vlat9: 4,
+  vlat10: 4,
+  vlat11: 4,
+  vlat12: 2
+};
+
 // 8 tópicos de dados do Censo 2022 com versões Controle (sem ícones) e Experimental (com ícones)
 const DADOS_GRAFICOS = [
   {
@@ -136,7 +152,7 @@ const DADOS_GRAFICOS = [
     imgControle: "assets/experimento/9.png",
     imgExperimental: "assets/experimento/10.png",
     compreensao: {
-      pergunta: "Quantas regiões tem a população maior que 20 milhões?",
+      pergunta: "Quais regiões tem a população maior que 20 milhões?",
       opcoes: [
         { valor: "a", texto: "Sudeste" },
         { valor: "b", texto: "Nordeste, sudeste e sul" },
@@ -243,28 +259,37 @@ let respostas = {
   emailFinal: ""
 };
 let tempoInicio = Date.now();
+let dadosEnviadosSheetDB = false;
 
 // ================================
 // FUNÇÃO DE ALOCAÇÃO ALEATÓRIA INTRA-SUJEITO
-// (Exatamente 4 com ícones e 4 sem ícones)
+// (Exatamente 4 com ícones e 4 sem ícones, em ordem aleatória)
 // ================================
-function sortearAlocacaoIntraSujeito() {
-  // Sorteia 4 índices para serem experimentais (com ícones)
-  const indices = [0, 1, 2, 3, 4, 5, 6, 7];
-  for (let i = indices.length - 1; i > 0; i--) {
+function embaralharArray(arr) {
+  const copia = [...arr];
+  for (let i = copia.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [indices[i], indices[j]] = [indices[j], indices[i]];
+    [copia[i], copia[j]] = [copia[j], copia[i]];
   }
+  return copia;
+}
 
-  const experimentaisSet = new Set(indices.slice(0, 4));
+function sortearAlocacaoIntraSujeito() {
+  // Sorteia 4 índices de tópicos para serem experimentais (com ícones)
+  const indicesCondicao = embaralharArray([0, 1, 2, 3, 4, 5, 6, 7]);
+  const experimentaisSet = new Set(indicesCondicao.slice(0, 4));
 
-  return DADOS_GRAFICOS.map((dado, idx) => {
-    const isExperimental = experimentaisSet.has(idx);
+  // Embaralha também a ordem de apresentação dos 8 gráficos
+  const ordemApresentacao = embaralharArray([0, 1, 2, 3, 4, 5, 6, 7]);
+
+  return ordemApresentacao.map((idxDado, pos) => {
+    const dado = DADOS_GRAFICOS[idxDado];
+    const isExperimental = experimentaisSet.has(idxDado);
     const condicao = isExperimental ? "com_icones" : "sem_icones";
     const imgSrc = isExperimental ? dado.imgExperimental : dado.imgControle;
 
     return {
-      index: idx + 1,
+      index: pos + 1,
       id: dado.id,
       tema: dado.tema,
       condicao: condicao,
@@ -485,12 +510,24 @@ function calcularEstatisticas() {
   if (parseInt(respostas.numeracia.num3) === GABARITO_NUMERACIA.num3) acertosNumeracia++;
   if (parseFloat(respostas.numeracia.num4) === GABARITO_NUMERACIA.num4) acertosNumeracia++;
 
-  // 2. Mini-VLAT (0 a 12)
-  let acertosVlat = 0;
+  // 2. Mini-VLAT (escore corrigido para chute: R - W / (C - 1), máximo 12)
+  let acertosVlatBrutos = 0;
+  let pontuacaoVlat = 0;
   for (let i = 1; i <= 12; i++) {
-    const resp = respostas.vlat['vlat' + i];
-    if (resp && resp.toString().trim() === GABARITO_VLAT['vlat' + i]) {
-      acertosVlat++;
+    const chave = 'vlat' + i;
+    const resp = respostas.vlat[chave];
+    const respLimpa = resp ? resp.toString().trim() : '';
+
+    if (!respLimpa) {
+      continue;
+    }
+
+    if (respLimpa === GABARITO_VLAT[chave]) {
+      acertosVlatBrutos++;
+      pontuacaoVlat += 1;
+    } else {
+      const numOpcoes = OPCOES_VLAT[chave] || 4;
+      pontuacaoVlat -= 1 / (numOpcoes - 1);
     }
   }
 
@@ -532,7 +569,8 @@ function calcularEstatisticas() {
 
   return {
     acertos_numeracia: acertosNumeracia,
-    acertos_vlat: acertosVlat,
+    acertos_vlat: Number(pontuacaoVlat.toFixed(2)),
+    acertos_vlat_brutos: acertosVlatBrutos,
     comp_com_icones_acertos: compIconesAcertos, // de 4
     comp_sem_icones_acertos: compSemIconesAcertos, // de 4
     mem_com_icones_acertos: memIconesAcertos, // de 4
@@ -542,7 +580,7 @@ function calcularEstatisticas() {
   };
 }
 
-function finalizarExperimento() {
+function montarExportacao() {
   const estatisticas = calcularEstatisticas();
 
   const dataExport = {
@@ -560,16 +598,6 @@ function finalizarExperimento() {
     respostas: respostas
   };
 
-  // Exportar arquivo JSON local como backup
-  const blob = new Blob([JSON.stringify(dataExport, null, 2)], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `experimento_${participanteId}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
-
-  // Enviar dados consolidados para o SheetDB
   const dadosPlanilha = {
     id_participante: participanteId,
     instituicao: instituicao,
@@ -587,6 +615,15 @@ function finalizarExperimento() {
     json_completo: JSON.stringify(dataExport)
   };
 
+  return { dataExport, dadosPlanilha };
+}
+
+function enviarParaSheetDB() {
+  if (dadosEnviadosSheetDB) return;
+  dadosEnviadosSheetDB = true;
+
+  const { dadosPlanilha } = montarExportacao();
+
   fetch(SHEETDB_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -597,8 +634,33 @@ function finalizarExperimento() {
     console.log('Dados salvos no SheetDB com sucesso:', data);
   })
   .catch(err => {
+    dadosEnviadosSheetDB = false;
     console.error('Erro ao salvar no SheetDB:', err);
   });
+}
+
+function finalizarExperimento() {
+  const { dataExport } = montarExportacao();
+
+  // Exportar arquivo JSON local como backup
+  const blob = new Blob([JSON.stringify(dataExport, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `experimento_${participanteId}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  if (!dadosEnviadosSheetDB) {
+    enviarParaSheetDB();
+  } else if (respostas.emailFinal) {
+    // Atualiza apenas o e-mail opcional no registro já enviado
+    fetch(`${SHEETDB_URL}/id_participante/${encodeURIComponent(participanteId)}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: { email: respostas.emailFinal, json_completo: JSON.stringify(dataExport) } })
+    }).catch(err => console.error('Erro ao atualizar e-mail no SheetDB:', err));
+  }
 }
 
 // ================================
@@ -655,11 +717,12 @@ function conectarBotoesGraficos() {
       if (id < NUM_GRAFICOS) {
         mostrarTela(`tela-grafico${id + 1}`);
       } else {
-        // Exibir ID do participante na tela final
+        // Exibir ID do participante na tela final e enviar dados imediatamente
         const badgeElem = document.getElementById('id-participante-display');
         if (badgeElem) {
           badgeElem.textContent = participanteId;
         }
+        enviarParaSheetDB();
         mostrarTela('tela-final');
       }
     });
@@ -699,16 +762,22 @@ window.addEventListener('DOMContentLoaded', () => {
     mostrarTela('tela-inicial');
   }
 
-  // Ocultar menu de debug se solicitado por parâmetro (ex: para capturas limpas)
-  if (urlParams.get('nodebug') === '1') {
+  // Exibir menu de debug apenas quando solicitado explicitamente via ?debug=1
+  if (urlParams.get('debug') === '1') {
     const debugMenu = document.getElementById('debug-menu');
-    if (debugMenu) debugMenu.style.display = 'none';
+    if (debugMenu) {
+      debugMenu.style.display = 'block';
+      debugMenu.removeAttribute('aria-hidden');
+    }
   }
 
   // BOTÃO INICIAR EXPERIMENTO
   document.getElementById('btn-iniciar').addEventListener('click', () => {
     const instSelect = document.getElementById('instituicao-select');
     instituicao = instSelect ? instSelect.value : "ESDI";
+
+    // Inicia contagem do tempo efetivo do experimento
+    tempoInicio = Date.now();
 
     // Gera ID anônimo no formato ENCE001 ou ESDI001 com numeração aleatória
     const numAleatorio = Math.floor(100 + Math.random() * 900);
@@ -787,7 +856,10 @@ window.addEventListener('DOMContentLoaded', () => {
   });
 
   // FINALIZAR EXPERIMENTO
-  document.getElementById('btn-final-ok').addEventListener('click', () => {
+  const btnFinalOk = document.getElementById('btn-final-ok');
+  btnFinalOk.addEventListener('click', () => {
+    btnFinalOk.disabled = true;
+    btnFinalOk.textContent = "Enviado";
     const emailElem = document.getElementById('email-input');
     respostas.emailFinal = emailElem ? emailElem.value.trim() : "";
     salvarLocalStorage();
