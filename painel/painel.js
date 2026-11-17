@@ -5,8 +5,8 @@
   'use strict';
 
   const SHEETDB_URL = 'https://sheetdb.io/api/v1/0hz7t51f4ukq9';
-  // Hash SHA-256 da senha padrão ("esdi2026"). Para trocar, gere o SHA-256 da nova senha.
-  const PAINEL_SENHA_HASH = '885206f38bcf8deb3ef5ceddce78d7a2da0d53ae2782eee78ac20f05c2156718';
+  // Hash SHA-256 da senha de acesso ao painel. Para trocar, gere o SHA-256 da nova senha.
+  const PAINEL_SENHA_HASH = '74158d939669eaaca363d37a6cc1e89343b38a90f239937b519882d739d1603d';
   const AUTH_STORAGE_KEY = 'painel_autenticado_v1';
   const S = window.PainelStats;
 
