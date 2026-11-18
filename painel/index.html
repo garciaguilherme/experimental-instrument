@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="painel.css" />
-  <script src="stats.js?v=2" defer></script>
-  <script src="painel.js" defer></script>
+  <script src="stats.js?v=3" defer></script>
+  <script src="painel.js?v=2" defer></script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
@@ -239,6 +239,32 @@
             </tr>
           </thead>
           <tbody id="tbody-participantes"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 6. ANÁLISE POR GRÁFICO INDIVIDUAL -->
+    <section class="panel-section" aria-labelledby="titulo-por-grafico">
+      <h2 id="titulo-por-grafico">6. Análise por Gráfico Individual (Com Ícones vs. Sem Ícones)</h2>
+      <p class="section-desc">
+        Comparação granular por tópico (teste <em>t</em> de Welch entre participantes que viram o gráfico com ícones e os que viram sem ícones) para identificar diferenças específicas de cada visualização.
+      </p>
+      <div class="table-wrapper">
+        <table>
+          <caption>Desempenho e engajamento por gráfico individual (Compreensão 0–1, Memória 0–1, Engajamento 1–5)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Gráfico / Tópico</th>
+              <th scope="col" class="num-col">N (Íc / Sem)</th>
+              <th scope="col" class="num-col">Comp. (Íc / Sem)</th>
+              <th scope="col" class="num-col">p Comp.</th>
+              <th scope="col" class="num-col">Mem. (Íc / Sem)</th>
+              <th scope="col" class="num-col">p Mem.</th>
+              <th scope="col" class="num-col">Engaj. (Íc / Sem)</th>
+              <th scope="col" class="num-col">p Engaj.</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-por-grafico"></tbody>
         </table>
       </div>
     </section>

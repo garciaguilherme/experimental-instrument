@@ -341,6 +341,43 @@ test('Normalização de registro: aceita decimais com vírgula vindos do Google 
   assert.strictEqual(norm.engajamento_sem_icones, 2.75);
 });
 
+test('Análise por tópico individual: extrai respostas de json_completo e calcula teste t por gráfico', () => {
+  const registros = [];
+  for (let i = 0; i < 6; i++) {
+    const comIcones = i < 3;
+    registros.push(stats.normalizarRegistro({
+      id_participante: `ESDI90${i}`,
+      instituicao: 'ESDI',
+      json_completo: JSON.stringify({
+        alocacao_graficos: [{ ordem: 1, id_topico: 1, tema: 'Uso de Bicicleta (%)', condicao: comIcones ? 'com_icones' : 'sem_icones' }],
+        respostas: {
+          vlat: {},
+          graficos: {
+            g1: {
+              tema: 'Uso de Bicicleta (%)',
+              condicao: comIcones ? 'com_icones' : 'sem_icones',
+              compreensao: comIcones ? 'c' : 'a',
+              memoria: comIcones ? 'c' : 'b',
+              e1: comIcones ? '5' : '2',
+              e2: comIcones ? '5' : '2',
+              e3: comIcones ? '4' : '2'
+            }
+          }
+        }
+      })
+    }));
+  }
+
+  const analise = stats.analisarPorTopico(registros);
+  const t1 = analise.find(t => t.id === 1);
+  assert.strictEqual(t1.comp.nA, 3);
+  assert.strictEqual(t1.comp.nB, 3);
+  assert.strictEqual(t1.comp.mediaA, 1);
+  assert.strictEqual(t1.comp.mediaB, 0);
+  approxEqual(t1.eng.mediaA, 4.6667, 1e-3);
+  assert.strictEqual(t1.eng.mediaB, 2);
+});
+
 // -------------------------
 // Executor
 // -------------------------

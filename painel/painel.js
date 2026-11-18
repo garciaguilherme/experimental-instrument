@@ -258,6 +258,37 @@
     `).join('');
   }
 
+  function renderPorGrafico(registros) {
+    const tbody = document.getElementById('tbody-por-grafico');
+    if (!tbody) return;
+
+    const analise = S.analisarPorTopico(registros);
+    const temDados = analise.some(item => item.comp.nA > 0 || item.comp.nB > 0);
+    if (!temDados) {
+      tbody.innerHTML = '<tr><td colspan="8">Sem respostas individuais por gráfico disponíveis nos registros atuais.</td></tr>';
+      return;
+    }
+
+    const fmtCelulaP = (teste) => {
+      if (!teste.valido) return '—';
+      const txt = fmtP(teste.pValor);
+      return teste.significativo ? `<span class="badge badge-sig">${txt}</span>` : txt;
+    };
+
+    tbody.innerHTML = analise.map(item => `
+      <tr>
+        <th scope="row">${item.id}. ${item.tema}</th>
+        <td class="num-col">${item.comp.nA} / ${item.comp.nB}</td>
+        <td class="num-col">${fmt(item.comp.mediaA)} / ${fmt(item.comp.mediaB)}</td>
+        <td class="num-col">${fmtCelulaP(item.comp)}</td>
+        <td class="num-col">${fmt(item.mem.mediaA)} / ${fmt(item.mem.mediaB)}</td>
+        <td class="num-col">${fmtCelulaP(item.mem)}</td>
+        <td class="num-col">${fmt(item.eng.mediaA)} / ${fmt(item.eng.mediaB)}</td>
+        <td class="num-col">${fmtCelulaP(item.eng)}</td>
+      </tr>
+    `).join('');
+  }
+
   function atualizarPainel() {
     const filtrados = obterRegistrosFiltrados();
     renderKPIs(filtrados);
@@ -266,6 +297,7 @@
     renderTestesUmaAmostra(filtrados);
     renderTestesInstituicoes();
     renderParticipantes(filtrados);
+    renderPorGrafico(filtrados);
   }
 
   // -------------------------

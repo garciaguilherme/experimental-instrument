@@ -590,6 +590,7 @@ function montarExportacao() {
     tempo_total_segundos: obterTempoTotal(),
     alocacao_graficos: alocacaoGraficos.map(a => ({
       ordem: a.index,
+      id_topico: a.id,
       tema: a.tema,
       condicao: a.condicao,
       imagem: a.imgSrc
@@ -614,6 +615,29 @@ function montarExportacao() {
     email: respostas.emailFinal || "",
     json_completo: JSON.stringify(dataExport)
   };
+
+  // Colunas individuais por tópico/gráfico (t1..t8) para análise granular na planilha
+  alocacaoGraficos.forEach((item, idx) => {
+    const num = idx + 1;
+    const tid = item.id;
+    const respGrafico = respostas.graficos['g' + num] || {};
+    const comp = respGrafico.compreensao ? (respGrafico.compreensao === item.dado.compreensao.correta ? 1 : 0) : "";
+    const mem = respGrafico.memoria ? (respGrafico.memoria === item.dado.memoria.correta ? 1 : 0) : "";
+    const e1 = parseInt(respGrafico.e1);
+    const e2 = parseInt(respGrafico.e2);
+    const e3 = parseInt(respGrafico.e3);
+    const eng = (Number.isFinite(e1) && Number.isFinite(e2) && Number.isFinite(e3))
+      ? Number(((e1 + e2 + e3) / 3).toFixed(2))
+      : "";
+
+    dadosPlanilha[`t${tid}_condicao`] = item.condicao;
+    dadosPlanilha[`t${tid}_comp`] = comp;
+    dadosPlanilha[`t${tid}_mem`] = mem;
+    dadosPlanilha[`t${tid}_eng`] = eng;
+    dadosPlanilha[`t${tid}_e1`] = Number.isFinite(e1) ? e1 : "";
+    dadosPlanilha[`t${tid}_e2`] = Number.isFinite(e2) ? e2 : "";
+    dadosPlanilha[`t${tid}_e3`] = Number.isFinite(e3) ? e3 : "";
+  });
 
   return { dataExport, dadosPlanilha };
 }

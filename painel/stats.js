@@ -32,6 +32,17 @@
     vlat9: 4, vlat10: 4, vlat11: 4, vlat12: 2
   };
 
+  const TOPICOS_GRAFICOS = [
+    { id: 1, tema: 'Uso de Bicicleta (%)', compCorreta: 'c', memCorreta: 'c' },
+    { id: 2, tema: 'Uso de Automóveis (%)', compCorreta: 'c', memCorreta: 'c' },
+    { id: 3, tema: 'Arborização (%)', compCorreta: 'a', memCorreta: 'b' },
+    { id: 4, tema: 'Conexão à rede de água (%)', compCorreta: 'c', memCorreta: 'c' },
+    { id: 5, tema: 'População por região', compCorreta: 'b', memCorreta: 'a' },
+    { id: 6, tema: 'População rural por região (%)', compCorreta: 'a', memCorreta: 'b' },
+    { id: 7, tema: 'População urbana por região (%)', compCorreta: 'a', memCorreta: 'c' },
+    { id: 8, tema: 'População de 70 anos ou mais (%)', compCorreta: 'b', memCorreta: 'c' }
+  ];
+
   // -------------------------
   // Funções matemáticas base
   // -------------------------
@@ -440,6 +451,58 @@
       ? vlatRecalculado.brutos
       : toNumOrNull(resumo.acertos_vlat_brutos);
 
+    // Extrai respostas individuais por tópico (1..8) a partir do JSON completo ou colunas t1..t8
+    const porTopico = {};
+    const graficosResp = parsedJson && parsedJson.respostas && parsedJson.respostas.graficos
+      ? parsedJson.respostas.graficos
+      : null;
+    const alocList = parsedJson && Array.isArray(parsedJson.alocacao_graficos)
+      ? parsedJson.alocacao_graficos
+      : [];
+
+    if (graficosResp && typeof graficosResp === 'object') {
+      for (let i = 1; i <= 8; i++) {
+        const g = graficosResp['g' + i];
+        if (!g) continue;
+        const alocItem = alocList.find(a => a.ordem === i) || {};
+        const tema = g.tema || alocItem.tema || '';
+        const topicoMeta = TOPICOS_GRAFICOS.find(t => t.id === alocItem.id_topico || t.tema === tema);
+        if (!topicoMeta) continue;
+
+        const condicao = g.condicao || alocItem.condicao || '';
+        const e1 = toNumOrNull(g.e1);
+        const e2 = toNumOrNull(g.e2);
+        const e3 = toNumOrNull(g.e3);
+        const eng = (e1 !== null && e2 !== null && e3 !== null) ? (e1 + e2 + e3) / 3 : null;
+
+        porTopico[topicoMeta.id] = {
+          id: topicoMeta.id,
+          tema: topicoMeta.tema,
+          condicao,
+          comp: g.compreensao ? (g.compreensao === topicoMeta.compCorreta ? 1 : 0) : null,
+          mem: g.memoria ? (g.memoria === topicoMeta.memCorreta ? 1 : 0) : null,
+          eng,
+          e1, e2, e3
+        };
+      }
+    } else {
+      TOPICOS_GRAFICOS.forEach(t => {
+        const condicao = row[`t${t.id}_condicao`];
+        if (!condicao) return;
+        porTopico[t.id] = {
+          id: t.id,
+          tema: t.tema,
+          condicao,
+          comp: toNumOrNull(row[`t${t.id}_comp`]),
+          mem: toNumOrNull(row[`t${t.id}_mem`]),
+          eng: toNumOrNull(row[`t${t.id}_eng`]),
+          e1: toNumOrNull(row[`t${t.id}_e1`]),
+          e2: toNumOrNull(row[`t${t.id}_e2`]),
+          e3: toNumOrNull(row[`t${t.id}_e3`])
+        };
+      });
+    }
+
     return {
       id_participante: row.id_participante || (parsedJson && parsedJson.id_participante) || '—',
       instituicao: row.instituicao || (parsedJson && parsedJson.instituicao) || 'Não informada',
@@ -454,17 +517,56 @@
       mem_sem_icones: toNumOrNull(row.mem_sem_icones !== undefined ? row.mem_sem_icones : resumo.mem_sem_icones_acertos),
       engajamento_icones: toNumOrNull(row.engajamento_icones !== undefined ? row.engajamento_icones : resumo.engajamento_medio_com_icones),
       engajamento_sem_icones: toNumOrNull(row.engajamento_sem_icones !== undefined ? row.engajamento_sem_icones : resumo.engajamento_medio_sem_icones),
+      por_topico: porTopico,
       vlat_recalculado: Boolean(vlatRecalculado)
     };
   }
 
+  /**
+   * Analisa cada gráfico/tópico individualmente (Com Ícones vs. Sem Ícones) usando teste t de Welch.
+   */
+  function analisarPorTopico(registros) {
+    return TOPICOS_GRAFICOS.map(t => {
+      const compIcon = [];
+      const compSem = [];
+      const memIcon = [];
+      const memSem = [];
+      const engIcon = [];
+      const engSem = [];
+
+      (registros || []).forEach(r => {
+        const item = r.por_topico && r.por_topico[t.id];
+        if (!item) return;
+        if (item.condicao === 'com_icones') {
+          if (item.comp !== null) compIcon.push(item.comp);
+          if (item.mem !== null) memIcon.push(item.mem);
+          if (item.eng !== null) engIcon.push(item.eng);
+        } else if (item.condicao === 'sem_icones') {
+          if (item.comp !== null) compSem.push(item.comp);
+          if (item.mem !== null) memSem.push(item.mem);
+          if (item.eng !== null) engSem.push(item.eng);
+        }
+      });
+
+      return {
+        id: t.id,
+        tema: t.tema,
+        comp: testeTIndependente(compIcon, compSem),
+        mem: testeTIndependente(memIcon, memSem),
+        eng: testeTIndependente(engIcon, engSem)
+      };
+    });
+  }
+
   return {
+    TOPICOS_GRAFICOS,
     calcularDescritiva,
     testeTPareado,
     testeTIndependente,
     testeTUmaAmostra,
     pValorTDistribution,
     calcularMiniVlatCorrigido,
-    normalizarRegistro
+    normalizarRegistro,
+    analisarPorTopico
   };
 }));
